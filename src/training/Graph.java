@@ -73,14 +73,20 @@ public class Graph {
             }
         return visited;
     }
+
     /*
     public  HashMap<Vertex, HashMap<Vertex, Integer>> dijkstra(Vertex vertex){
-        this.getAdjVertices().values().forEach(v -> {
-            
+        Set<String> visited = new LinkedHashSet<String>();
+        Set<HashMap<Vertex, Integer>> reachable = new LinkedHashSet<>();
+        Vertex scope = vertex;
+        this.getAdjVertices().forEach((node, reachables) -> {
+            if (reachables.containsKey(scope)) reachable.add();
         });
         this.getAdjVertices(vertex).forEach();
    }
+
      */
+
 
     public static void main(String[] args) {
         Graph graph = new Graph();
