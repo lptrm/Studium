@@ -48,7 +48,7 @@ public class Controller {
     public void zug() throws IOException, ClassNotFoundException {
         playerIndex = player ? 0 : 1;
         if (eingabe) {
-            HMI.print(visualisierung.toString());
+            HMI.print(spielfeld.toString());
             for (Spielfigur f : spielfigur) {
                 Fraction points = f.getPunkte();
                 if (!points.getNumerator().equals(BigInteger.ZERO) && !points.getDenominator().equals(BigInteger.ZERO))

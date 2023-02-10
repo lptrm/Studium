@@ -6,4 +6,5 @@ public class WeightedEdge extends Edge{
         super(edon1, edon2);
         this.costs = costs;
     }
+
 }
