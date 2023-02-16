@@ -1,11 +1,10 @@
 package training;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-public class Node {
+public class Node implements Comparable<Node>{
     public String name;
+
 
     public Node(String name) {
         this.name = name;
@@ -21,5 +20,13 @@ public class Node {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+    @Override
+    public String toString(){
+        return this.name;
+    }
+    @Override
+    public int compareTo(Node other) {
+        return this.name.compareTo(other.name);
     }
 }

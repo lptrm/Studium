@@ -18,7 +18,4 @@ public class MaXx {
         controller.setEnd();
 
     }
-    public static Server getServer() throws IOException {
-        return new Server();
-    }
 }

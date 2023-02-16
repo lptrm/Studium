@@ -35,7 +35,7 @@ public class Controller {
         this.winner = null;
         this.spielfigur = spielfeld.getF();
         online = HMI.getMode();
-        this.server = online ? MaXx.getServer() : null;
+        this.server = online ? new Server() : null;
         visualisierung.init(spielfeld);
         HMI.begin();
     }
