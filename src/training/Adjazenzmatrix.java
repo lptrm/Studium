@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Adjazenzmatrix {
-    private final int[][] matrix;
-    private final Node[] nodes;
+    public final int[][] matrix;
+    public final Node[] nodes;
 
     public Adjazenzmatrix(Set<Node> nodes1, Set<WeightedEdge> edges){
         nodes = new Node[nodes1.size()];
