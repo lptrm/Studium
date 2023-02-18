@@ -33,6 +33,7 @@ public class GraphOwn {
         graph.adjazenzmatrix = new Adjazenzmatrix(graph.nodes, graph.edges);
         System.out.println(graph.adjazenzmatrix);
         DijkstraTable test = graph.Dijkstra(u);
+        test = graph.Dijkstra(w);
     }
 
 public GraphOwn addEdge(Node node1, Node node2, int costs){
@@ -45,43 +46,59 @@ public GraphOwn addEdge(Node node1, Node node2, int costs){
 public DijkstraTable Dijkstra(Node source){
         int matrixVector;
         int currentCosts = 0;
-        int[] visited = new int[this.adjazenzmatrix.nodes.length];
-        DijkstraTableCell[] minCosts = new DijkstraTableCell[this.adjazenzmatrix.nodes.length-1];
         Node scope = source;
-    ArrayList<DijkstraTableCell> reachables = new ArrayList<>();
-
-
-    for (int j = 0; j < this.adjazenzmatrix.nodes.length; j++){
-
-
+    Set<DijkstraTupel> settled = new HashSet<>();
+    Set<Node> visited = new HashSet<>();
+    for (Node node:
+         this.nodes) {
+        if (!node.equals(source)){
+            settled.add(new DijkstraTupel(node, null, Integer.MAX_VALUE));
+        }
+        visited.add(node);
+    }
+    for (int j = 0; j < settled.size(); j++){
         matrixVector = getVector(scope);
-        visited[j] = matrixVector;
-
-        int[] minimalCosts = {Integer.MAX_VALUE, 0};
-    for (int i = 0; i < this.adjazenzmatrix.matrix[matrixVector].length; i++){
-        if (i!=matrixVector && !notVisited(visited, i)){
-            if (this.adjazenzmatrix.matrix[matrixVector][i]!=0){
-                DijkstraTableCell tmp = new DijkstraTableCell();
-                tmp.costs = this.adjazenzmatrix.matrix[matrixVector][i] + currentCosts;
-                tmp.predecessor = scope;
-                tmp.scope = this.adjazenzmatrix.nodes[i];
-                tmp.step = j;
-                reachables.add(tmp);
-                if (minimalCosts[0]>tmp.costs){
-                    minimalCosts[0] = tmp.costs;
-                    minimalCosts[1] = i;
+        for (DijkstraTupel e : settled){
+            int matrixVectorTarget = getVector(e.destination);
+            if(this.adjazenzmatrix.matrix[matrixVector][matrixVectorTarget]!=0){
+                if ((this.adjazenzmatrix.matrix[matrixVector][matrixVectorTarget] + currentCosts)<e.costs){
+                    e.costs = this.adjazenzmatrix.matrix[matrixVector][matrixVectorTarget] + currentCosts;
+                    e.destination = this.adjazenzmatrix.nodes[matrixVectorTarget];
+                    e.predecessor = scope;
                 }
-            } else {
-                DijkstraTableCell tmp = new DijkstraTableCell();
-                tmp.step = j;
-                reachables.add(tmp);
+            }
+        }
+
+/*
+    for (int i = 0; i < this.adjazenzmatrix.matrix[matrixVector].length; i++){
+        if (i!=matrixVector){
+            if (this.adjazenzmatrix.matrix[matrixVector][i]!=0){
+                for (DijkstraTupel e : settled){
+                    if(this.adjazenzmatrix.nodes[i].equals(e.destination)){
+                        if ((this.adjazenzmatrix.matrix[matrixVector][i] + currentCosts)<e.costs){
+                            e.costs = this.adjazenzmatrix.matrix[matrixVector][i] + currentCosts;
+                            e.destination = this.adjazenzmatrix.nodes[i];
+                            e.predecessor = scope;
+                        }
+                    }
+
+                }
+
             }
         }
     }
-    currentCosts += (minimalCosts[0]-currentCosts);
-    scope = this.adjazenzmatrix.nodes[minimalCosts[1]];
+
+ */
+        currentCosts = Integer.MAX_VALUE;
+        visited.remove(scope);
+        for (DijkstraTupel e : settled){
+            if (visited.contains(e.destination) && e.costs<currentCosts){
+                scope = e.destination;
+                currentCosts = e.costs;
+            }
+        }
     }
-    reachables.forEach(System.out::println);
+    settled.forEach(System.out::println);
 
 
 
