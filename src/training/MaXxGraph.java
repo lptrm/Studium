@@ -43,13 +43,24 @@ public class MaXxGraph {
         }
         i = 0;
         for(MaXxNodeWrapper n : graph.nodes){
-            int rowIndex = i%8;
+            int columnIndex = i%8;
             if(i>7 && i<56){
                 //Nördliche Kanten
                 graph.addEdge(n, graph.nodes.get((i-8)), graph.nodes.get((i-8)).value.doubleValue());
                 graph.addEdge(graph.nodes.get((i-8)), n, n.value.doubleValue());
+                //Südliche Kanten
+                graph.addEdge(n, graph.nodes.get((i+8)), graph.nodes.get((i+8)).value.doubleValue());
+                graph.addEdge(graph.nodes.get((i+8)), n, n.value.doubleValue());
                 //Östliche Kanten
-                //TODO: Kanten einfügen!
+                graph.addEdge(n, graph.nodes.get((i+1)), graph.nodes.get((i+1)).value.doubleValue());
+                graph.addEdge(graph.nodes.get((i+1)), n, n.value.doubleValue());
+                //Westliche Kanten
+                graph.addEdge(n, graph.nodes.get((i-1)), graph.nodes.get((i-1)).value.doubleValue());
+                graph.addEdge(graph.nodes.get((i-1)), n, n.value.doubleValue());
+                //Nordösliche Kante
+                //graph.addEdge(n, graph.nodes.get((i-7)), graph.nodes.get((i-7)).value.doubleValue());
+                //Südwestliche Kante
+                //graph.addEdge(n, graph.nodes.get((i+7)), graph.nodes.get((i+7)).value.doubleValue());
             }
             i++;
         }
