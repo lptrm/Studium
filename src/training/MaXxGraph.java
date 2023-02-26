@@ -44,7 +44,7 @@ public class MaXxGraph {
         i = 0;
         for(MaXxNodeWrapper n : graph.nodes){
             int rowIndex = i%8;
-            if(rowIndex>0 && rowIndex<7 && i>7 && i<56){
+            if(i>7 && i<56){
                 //Nördliche Kanten
                 graph.addEdge(n, graph.nodes.get((i-8)), graph.nodes.get((i-8)).value.doubleValue());
                 graph.addEdge(graph.nodes.get((i-8)), n, n.value.doubleValue());
@@ -65,7 +65,6 @@ public class MaXxGraph {
 
          */
 
-        graph.nodes.forEach(System.out::println);
         graph.adjazenzmatrix = new MaXxAdjazenzmatrix(graph.nodes, graph.edges);
         System.out.println(graph.adjazenzmatrix);
     }
