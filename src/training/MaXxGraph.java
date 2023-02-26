@@ -45,8 +45,10 @@ public class MaXxGraph {
         for(MaXxNodeWrapper n : graph.nodes){
             int rowIndex = i%8;
             if(rowIndex>0 && rowIndex<7 && i>7 && i<56){
+                //Nördliche Kanten
                 graph.addEdge(n, graph.nodes.get((i-8)), graph.nodes.get((i-8)).value.doubleValue());
                 graph.addEdge(graph.nodes.get((i-8)), n, n.value.doubleValue());
+                //Östliche Kanten
             }
             i++;
         }
