@@ -76,9 +76,23 @@ public class Spielfeld {
 
         return res;
     }
+    public Fraction[][] switchValues(){
+        Fraction[][] res = new Fraction[this.zeilen][this.spalten];
+        int i = 0;
+        int j;
+        for (Fraction[] fr : this.feld){
+            j = 0;
+            for (Fraction f : fr){
+                res[i][j] = new Fraction(f.getDenominator(), f.getNumerator());
+                j++;
+            }
+            i++;
+        }
+        return res;
+    }
 
     public void setValue(int x, int y) {
-        this.feld[x][y] = new Fraction(0, 0);
+        this.feld[x][y] = new Fraction(BigInteger.ZERO, BigInteger.ZERO);
     }
 
     public Fraction getValue(int x, int y) {

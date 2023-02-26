@@ -3,7 +3,10 @@ package training;
 import MaXx.*;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MaXxGraph {
     ArrayList<MaXxNodeWrapper> nodes;
@@ -23,6 +26,49 @@ public class MaXxGraph {
         this.nodes.add(node);
         return this;
     }
+    //TODO: Dijkstra Anpassen
+    /*
+    public DijkstraTable Dijkstra(MaXxNodeWrapper source) {
+        int matrixVectorScope;
+        int currentCosts = 0;
+        MaXxNodeWrapper scope = source;
+        Set<DijkstraTupel> reachable = new HashSet<>();
+        Set<MaXxNodeWrapper> visited = new HashSet<>();
+        //Init
+        for (MaXxNodeWrapper e :
+                this.nodes) {
+            if (!e.equals(source)) {
+                reachable.add(new DijkstraTupel(e, null, Integer.MAX_VALUE));
+            }
+            visited.add(e);
+        }
+        //Iterative Algorithm
+        for (int j = 0; j < reachable.size(); j++) {
+            matrixVectorScope = getVector(scope);
+            for (DijkstraTupel e : reachable) {
+                int matrixVectorTarget = getVector(e.destination);
+                if (this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] != 0) {
+                    if ((this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts) < e.costs) {
+                        e.costs = this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts;
+                        e.destination = this.adjazenzmatrix.nodes[matrixVectorTarget];
+                        e.predecessor = scope;
+                    }
+                }
+            }
+            currentCosts = Integer.MAX_VALUE;
+            visited.remove(scope);
+            for (DijkstraTupel e : reachable) {
+                if (visited.contains(e.destination) && e.costs < currentCosts) {
+                    scope = e.destination;
+                    currentCosts = e.costs;
+                }
+            }
+        }
+        reachable.forEach(System.out::println);
+        return null;
+    }
+
+     */
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         MaXxGraph graph = new MaXxGraph();
@@ -31,7 +77,7 @@ public class MaXxGraph {
         System.out.println(spielfeld);
         int i = 0;
         int j = 0;
-        Fraction[][] fm = spielfeld.getFeld();
+        Fraction[][] fm = spielfeld.switchValues();
         for (Fraction[] fa:
              fm) {
             for (Fraction f:
@@ -44,24 +90,37 @@ public class MaXxGraph {
         i = 0;
         for(MaXxNodeWrapper n : graph.nodes){
             int columnIndex = i%8;
-            if(i>7 && i<56){
+                double srcValue = n.value.getNumerator().equals(BigInteger.ZERO) ? 0.0 : n.value.doubleValue();
+                double dstValue;
+            if (i>7) {
                 //Nördliche Kanten
-                graph.addEdge(n, graph.nodes.get((i-8)), graph.nodes.get((i-8)).value.doubleValue());
-                graph.addEdge(graph.nodes.get((i-8)), n, n.value.doubleValue());
-                //Südliche Kanten
-                graph.addEdge(n, graph.nodes.get((i+8)), graph.nodes.get((i+8)).value.doubleValue());
-                graph.addEdge(graph.nodes.get((i+8)), n, n.value.doubleValue());
-                //Östliche Kanten
-                graph.addEdge(n, graph.nodes.get((i+1)), graph.nodes.get((i+1)).value.doubleValue());
-                graph.addEdge(graph.nodes.get((i+1)), n, n.value.doubleValue());
-                //Westliche Kanten
-                graph.addEdge(n, graph.nodes.get((i-1)), graph.nodes.get((i-1)).value.doubleValue());
-                graph.addEdge(graph.nodes.get((i-1)), n, n.value.doubleValue());
-                //Nordösliche Kante
-                //graph.addEdge(n, graph.nodes.get((i-7)), graph.nodes.get((i-7)).value.doubleValue());
-                //Südwestliche Kante
-                //graph.addEdge(n, graph.nodes.get((i+7)), graph.nodes.get((i+7)).value.doubleValue());
+                dstValue = graph.nodes.get((i-8)).value.getNumerator().equals(BigInteger.ZERO) ? 0.0 : graph.nodes.get((i-8)).value.doubleValue();
+                graph.addEdge(n, graph.nodes.get((i-8)), dstValue);
+                graph.addEdge(graph.nodes.get((i-8)), n, srcValue);
             }
+            if (i<56){
+                //Südliche Kanten
+                dstValue = graph.nodes.get((i+8)).value.getNumerator().equals(BigInteger.ZERO) ? 0.0 : graph.nodes.get((i+8)).value.doubleValue();
+                graph.addEdge(n, graph.nodes.get((i+8)), dstValue);
+                graph.addEdge(graph.nodes.get((i+8)), n, srcValue);
+            }
+            if (columnIndex!=7){
+                //Östliche Kanten
+                dstValue = graph.nodes.get((i+1)).value.getNumerator().equals(BigInteger.ZERO) ? 0.0 : graph.nodes.get((i+1)).value.doubleValue();
+                graph.addEdge(n, graph.nodes.get((i+1)), dstValue);
+                graph.addEdge(graph.nodes.get((i+1)), n, srcValue);
+            }
+            if (columnIndex!=0){
+                //Westliche Kanten
+                dstValue = graph.nodes.get((i-1)).value.getNumerator().equals(BigInteger.ZERO) ? 0.0 : graph.nodes.get((i-1)).value.doubleValue();
+                graph.addEdge(n, graph.nodes.get((i-1)), dstValue);
+                graph.addEdge(graph.nodes.get((i-1)), n, srcValue);
+            }
+                //Nordösliche Kante
+                //graph.addEdge(n, graph.nodes.get((i-7)), graph.nodes.get((i-7)).srcValue.doubleValue());
+                //Südwestliche Kante
+                //graph.addEdge(n, graph.nodes.get((i+7)), graph.nodes.get((i+7)).srcValue.doubleValue());
+
             i++;
         }
 
