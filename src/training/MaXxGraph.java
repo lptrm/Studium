@@ -49,6 +49,7 @@ public class MaXxGraph {
                 graph.addEdge(n, graph.nodes.get((i-8)), graph.nodes.get((i-8)).value.doubleValue());
                 graph.addEdge(graph.nodes.get((i-8)), n, n.value.doubleValue());
                 //Östliche Kanten
+                //TODO: Kanten einfügen!
             }
             i++;
         }
