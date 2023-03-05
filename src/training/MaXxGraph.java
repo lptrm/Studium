@@ -29,7 +29,7 @@ public class MaXxGraph {
 
     public DijkstraTable Dijkstra(MaXxNodeWrapper source) {
         int matrixVectorScope;
-        double currentCosts = 0;
+        double currentCosts = 1d;
         MaXxNodeWrapper scope = source;
         Set<MaXxDijkstraTupel> reachable = new HashSet<>();
         Set<MaXxNodeWrapper> visited = new HashSet<>();
@@ -37,33 +37,41 @@ public class MaXxGraph {
         for (MaXxNodeWrapper e :
                 this.nodes) {
             if (!e.equals(source)) {
-                reachable.add(new MaXxDijkstraTupel(e, null, Integer.MAX_VALUE));
+                reachable.add(new MaXxDijkstraTupel(e, null, 0d));
             }
             visited.add(e);
         }
         //Iterative Algorithm
+        boolean help = false;
         for (int j = 0; j < reachable.size(); j++) {
             matrixVectorScope = getVector(scope);
             for (MaXxDijkstraTupel e : reachable) {
                 int matrixVectorTarget = getVector(e.destination);
                 if (this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] != 0) {
-                    if ((this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts) < e.costs) {
+                    if ((this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts) > e.costs) {
                         e.costs = this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts;
                         e.destination = this.adjazenzmatrix.nodes[matrixVectorTarget];
                         e.predecessor = scope;
-                    }
-                }
-            }
-            currentCosts = Integer.MAX_VALUE;
+                        e.step = j;
+                        if (e.costs >= 53d) {
+                            help = true;
+                            break;
+                        }
+                    }if(help) break;
+                } if (help) break;
+            } if (help) break;
+            currentCosts = 1d;
             visited.remove(scope);
             for (MaXxDijkstraTupel e : reachable) {
-                if (visited.contains(e.destination) && e.costs < currentCosts) {
+                if (visited.contains(e.destination) && e.costs > currentCosts) {
                     scope = e.destination;
                     currentCosts = e.costs;
                 }
             }
         }
-        reachable.forEach(System.out::println);
+        reachable.forEach(e -> {
+            if(e.predecessor!=null) System.out.println(e);
+        });
         return null;
     }
     public int getVector(MaXxNodeWrapper source) {
@@ -83,7 +91,7 @@ public class MaXxGraph {
         System.out.println(spielfeld);
         int i = 0;
         int j = 0;
-        Fraction[][] fm = spielfeld.switchValues();
+        Fraction[][] fm = spielfeld.getFeld();
         for (Fraction[] fa:
              fm) {
             for (Fraction f:
