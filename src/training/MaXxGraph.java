@@ -26,26 +26,25 @@ public class MaXxGraph {
         this.nodes.add(node);
         return this;
     }
-    //TODO: Dijkstra Anpassen
-    /*
+
     public DijkstraTable Dijkstra(MaXxNodeWrapper source) {
         int matrixVectorScope;
-        int currentCosts = 0;
+        double currentCosts = 0;
         MaXxNodeWrapper scope = source;
-        Set<DijkstraTupel> reachable = new HashSet<>();
+        Set<MaXxDijkstraTupel> reachable = new HashSet<>();
         Set<MaXxNodeWrapper> visited = new HashSet<>();
         //Init
         for (MaXxNodeWrapper e :
                 this.nodes) {
             if (!e.equals(source)) {
-                reachable.add(new DijkstraTupel(e, null, Integer.MAX_VALUE));
+                reachable.add(new MaXxDijkstraTupel(e, null, Integer.MAX_VALUE));
             }
             visited.add(e);
         }
         //Iterative Algorithm
         for (int j = 0; j < reachable.size(); j++) {
             matrixVectorScope = getVector(scope);
-            for (DijkstraTupel e : reachable) {
+            for (MaXxDijkstraTupel e : reachable) {
                 int matrixVectorTarget = getVector(e.destination);
                 if (this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] != 0) {
                     if ((this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts) < e.costs) {
@@ -57,7 +56,7 @@ public class MaXxGraph {
             }
             currentCosts = Integer.MAX_VALUE;
             visited.remove(scope);
-            for (DijkstraTupel e : reachable) {
+            for (MaXxDijkstraTupel e : reachable) {
                 if (visited.contains(e.destination) && e.costs < currentCosts) {
                     scope = e.destination;
                     currentCosts = e.costs;
@@ -67,8 +66,15 @@ public class MaXxGraph {
         reachable.forEach(System.out::println);
         return null;
     }
+    public int getVector(MaXxNodeWrapper source) {
+        int i = 0;
+        for (MaXxNodeWrapper e : this.adjazenzmatrix.nodes) {
+            if (source.equals(e)) break;
+            i++;
+        }
+        return i;
+    }
 
-     */
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         MaXxGraph graph = new MaXxGraph();
@@ -137,5 +143,6 @@ public class MaXxGraph {
 
         graph.adjazenzmatrix = new MaXxAdjazenzmatrix(graph.nodes, graph.edges);
         System.out.println(graph.adjazenzmatrix);
+        DijkstraTable table = graph.Dijkstra(graph.nodes.get(44));
     }
 }
