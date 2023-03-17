@@ -3,11 +3,11 @@ package kProgSS2023;
 import java.math.BigInteger;
 
 /**
+ * @version 42, 17.03.2023
  * @author Jan Obernberger
  * Es kann beobachtet werden, dass durch exponentielles Wachstum sehr viele Threads erzeugt werden. Außerdem wird die im
  * ursprünglichen Programm gegebene Art der Limitierung durch die Manipulation der Zahlen gemäß Aufgabe (3*n+1) umgangen.
  * Im Allgemein muss der Abbruch des Programms erzwungen werden.
- * @version 42, 17.03.2023
  **/
 public class PrimeTree extends Thread {
     private final int p;
