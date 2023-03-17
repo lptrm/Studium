@@ -52,7 +52,7 @@ public class MaXxGraph {
                         e.costs = this.adjazenzmatrix.matrix[matrixVectorScope][matrixVectorTarget] + currentCosts;
                         e.destination = this.adjazenzmatrix.nodes[matrixVectorTarget];
                         e.predecessor = scope;
-                        e.step = j;
+                        e.step = j+1;
                         if (e.costs >= 53d) {
                             help = true;
                             break;
@@ -90,16 +90,14 @@ public class MaXxGraph {
         Spielfeld spielfeld = new Spielfeld(p);
         System.out.println(spielfeld);
         int i = 0;
-        int j = 0;
         Fraction[][] fm = spielfeld.getFeld();
         for (Fraction[] fa:
              fm) {
             for (Fraction f:
                  fa) {
-                graph.addNode((new MaXxNodeWrapper(new Node(f.toString()), f, i, j)));
-                j++;
+                graph.addNode((new MaXxNodeWrapper(new Node(f.toString()), f, i)));
+                i++;
             }
-            i++;
         }
         i = 0;
         for(MaXxNodeWrapper n : graph.nodes){
@@ -150,7 +148,9 @@ public class MaXxGraph {
          */
 
         graph.adjazenzmatrix = new MaXxAdjazenzmatrix(graph.nodes, graph.edges);
-        System.out.println(graph.adjazenzmatrix);
-        DijkstraTable table = graph.Dijkstra(graph.nodes.get(44));
+        //System.out.println(graph.adjazenzmatrix);
+        DijkstraTable table1 = graph.Dijkstra(graph.nodes.get(44));
+        System.out.println();
+        DijkstraTable table2 = graph.Dijkstra(graph.nodes.get(19));
     }
 }

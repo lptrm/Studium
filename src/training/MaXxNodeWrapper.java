@@ -26,11 +26,11 @@ public class MaXxNodeWrapper implements Comparable<MaXxNodeWrapper> {
         return Objects.hash(node, value);
     }
 
-    public MaXxNodeWrapper(Node node, Fraction value, int i, int j) {
+    public MaXxNodeWrapper(Node node, Fraction value, int i) {
         this.node = node;
         this.value = value;
-        this.xPos = i;
-        this.yPos = j;
+        this.xPos = i % 8;
+        this.yPos = i / 8;
     }
 
     @Override
