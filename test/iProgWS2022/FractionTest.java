@@ -1,10 +1,11 @@
 package iProgWS2022;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FractionTest {
     //TODO: Ist Subklasse von Number? Ist Immutable? Hat BigIntegerInZählerUndNenner?
-
+/*
     @Test
     public void testToString() {
     }
@@ -33,10 +34,17 @@ public class FractionTest {
     public void testCompareTo() {
     }
 
+ */
+
     @Test
     public void testIntValue() {
-    }
+        var frac = new Fraction(1,2);
+        assertEquals(0, frac.intValue());
 
+        frac = new Fraction(1, 1);
+        assertEquals(1, frac.intValue());
+    }
+/*
     @Test
     public void testLongValue() {
     }
@@ -48,4 +56,6 @@ public class FractionTest {
     @Test
     public void testDoubleValue() {
     }
+
+ */
 }
