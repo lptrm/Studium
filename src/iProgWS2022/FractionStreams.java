@@ -40,7 +40,7 @@ public class FractionStreams {
 
         ArrayList<Fraction> listt = new ArrayList<Fraction>(liste);
         Collections.shuffle(listt);
-        listt.stream().filter(n -> n.zaehler.isProbablePrime(10) && n.nenner.isProbablePrime(10)).forEach(x -> System.out.print(x + " "));
+        listt.stream().filter(n -> n.numerator.isProbablePrime(10) && n.denominator.isProbablePrime(10)).forEach(x -> System.out.print(x + " "));
 
                 /**
         *Gibt alle Brüche aus, die Integer sind
