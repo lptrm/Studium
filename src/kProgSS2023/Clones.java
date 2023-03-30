@@ -1,14 +1,9 @@
 package kProgSS2023;
 
-import iProgWS2022.Person;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
 
 public class Clones extends Frame implements ActionListener {
     ArrayList<ActionListener> clones = new ArrayList<>();
@@ -17,26 +12,29 @@ public class Clones extends Frame implements ActionListener {
     Color[] colors = {Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.pink,
             Color.red, Color.white, Color.yellow};
     int iColor = 0;
-    Clones(){
+
+    Clones() {
         setLayout(new FlowLayout());
-        for(Button e: buttons){
+        for (Button e : buttons) {
             e.addActionListener(this);
             this.add(e);
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("cycle")){
-            setBackground(colors[(iColor++ % (colors.length-1))]);
+        if (e.getActionCommand().equals("cycle")) {
+            setBackground(colors[(iColor++ % (colors.length - 1))]);
             repaint();
-        } else if(e.getActionCommand().equals("clone")){
+        } else if (e.getActionCommand().equals("clone")) {
             Clones tmp = new Clones();
-            tmp.setBackground(colors[(iColor-1%(colors.length-1))]);
+            tmp.setBackground(colors[(iColor - 1 % (colors.length - 1))]);
             tmp.addWindowListener(new WindowQuitter());
             tmp.setSize(400, 300);
             tmp.setVisible(true);
             clones.add(tmp);
-        };
+        }
+        ;
     }
 
     public static void main(String[] args) {
