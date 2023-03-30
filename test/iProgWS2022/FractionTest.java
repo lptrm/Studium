@@ -14,6 +14,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FractionTest {
+    //HashWert und Equals
+
+    //Immutability evtl über reflections testen
+
     //unfortunately I could not find a method to "check" the immutability of the variables
     @Test
     public void testIsChildOfNumber() {
@@ -271,6 +275,7 @@ public class FractionTest {
     @Test
     public void testIntValue() {
         //Bereichsgrenzen
+        //GGF noch Arithmetic Exception
 
         Fraction[] fracB = {new Fraction(BigInteger.valueOf(Integer.MIN_VALUE), BigInteger.ONE),
                 new Fraction(BigInteger.ONE, BigInteger.valueOf(Integer.MIN_VALUE)), new Fraction(BigInteger.valueOf(Integer.MAX_VALUE),
