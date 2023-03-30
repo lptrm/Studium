@@ -17,11 +17,6 @@ public class ElevenColors extends Frame implements ActionListener {
         }
     }
     public void actionPerformed( ActionEvent evt) {
-        if ( evt.getActionCommand().equals( "red" ) ) // Kommando abfragen
-            setBackground( Color.red ); // rote Farbe setzen
-        else
-            setBackground( Color.green ); // grüne Farbe setzen
-        repaint(); // neu zeichnen
         String res = evt.getActionCommand();
         switch (res) {
             case "black" -> setBackground(Color.black);
