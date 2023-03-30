@@ -40,7 +40,6 @@ public class ElevenColors extends Frame implements ActionListener {
         demo.addWindowListener(new WindowQuitter());
         demo.setSize( 800, 600 );
         demo.setVisible( true );
-        System.out.println(Arrays.toString(demo.getComponents()));
     }
 
 }
