@@ -37,7 +37,6 @@ public class ElevenColors extends Frame implements ActionListener {
             default -> {
             }
         }
-        repaint();
     }
 
     public static void main(String[] args) {
