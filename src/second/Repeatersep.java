@@ -1,4 +1,4 @@
-package kProgSS2023;
+package second;
 import java.awt.*;
 import java.awt.event.*;
 public class Repeatersep extends Frame implements ActionListener {

@@ -1,7 +1,7 @@
-package kProgSS2023;
+package second;
 
 import java.awt.*;
-import java.awt.event.*;
+
 public class KnopfDemoFlow extends Frame {
     Button bChange = new Button("Klick mich!");
     KnopfDemoFlow() { // Konstruktor für KnopfDemoFlow

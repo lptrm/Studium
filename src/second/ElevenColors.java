@@ -1,24 +1,28 @@
-package kProgSS2023;
+package second;
+/**
+ * @version 42, 31.03.2023
+ * @author Jan Obernberger
+ **/
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class ElevenColors extends Frame implements ActionListener {
-    Button[] buttons = { new Button("black"),new Button("blue"),new Button("cyan"), new Button("gray"),
+    Button[] buttons = {new Button("black"), new Button("blue"), new Button("cyan"), new Button("gray"),
             new Button("green"), new Button("magenta"), new Button("orange"), new Button("pink"),
             new Button("red"), new Button("white"), new Button("yellow")};
 
     ElevenColors() {
-        setLayout( new FlowLayout() );
-        for(Button e : this.buttons){
+        setLayout(new FlowLayout());
+        for (Button e : this.buttons) {
             e.addActionListener(this);
             this.add(e);
         }
     }
-    public void actionPerformed( ActionEvent evt) {
-        String res = evt.getActionCommand();
-        switch (res) {
+
+    public void actionPerformed(ActionEvent evt) {
+        switch (evt.getActionCommand()) {
             case "black" -> setBackground(Color.black);
             case "blue" -> setBackground(Color.blue);
             case "cyan" -> setBackground(Color.cyan);
@@ -35,11 +39,12 @@ public class ElevenColors extends Frame implements ActionListener {
         }
         repaint();
     }
-    public static void main ( String[] args ){
+
+    public static void main(String[] args) {
         ElevenColors demo = new ElevenColors();
         demo.addWindowListener(new WindowQuitter());
-        demo.setSize( 800, 600 );
-        demo.setVisible( true );
+        demo.setSize(800, 600);
+        demo.setVisible(true);
     }
 
 }

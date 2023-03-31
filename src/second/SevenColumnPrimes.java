@@ -1,4 +1,4 @@
-package kProgSS2023;
+package second;
 /**
  * @version 42, 17.03.2023
  * @author Jan Obernberger

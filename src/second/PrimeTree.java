@@ -1,4 +1,4 @@
-package kProgSS2023;
+package second;
 
 import java.math.BigInteger;
 

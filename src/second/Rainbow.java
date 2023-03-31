@@ -1,39 +1,39 @@
-package kProgSS2023;
+package second;
+/**
+ * @version 42, 31.03.2023
+ * @author Jan Obernberger
+ **/
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Rainbow extends Frame implements ActionListener{
+public class Rainbow extends Frame implements ActionListener {
     static Color[] colors = {Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.pink,
             Color.red, Color.white, Color.yellow};
     Button button = new Button("epilepsy");
-    Rainbow(){
+
+    Rainbow() {
         setLayout(new FlowLayout());
         button.addActionListener(this);
         this.add(button);
     }
 
-    /**
-     * Invoked when an action occurs.
-     *
-     * @param e the event to be processed
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("epilepsy")){
+        if (e.getActionCommand().equals("epilepsy")) {
             new Frame() {
-                Timer timer = new Timer();
-                int iColor = 0;
+                int iColor = 1;
 
                 void strobe() {
+                    Timer timer = new Timer();
                     timer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            setBackground(colors[((++iColor%colors.length-1))]);
-                            repaint();
+                            setBackground(colors[(iColor++ % (colors.length - 1))]);
                         }
-                    }, 1000, 1000);
+                    }, 100, 100);
                     setSize(400, 150);
                     setVisible(true);
                 }

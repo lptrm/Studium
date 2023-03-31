@@ -1,4 +1,8 @@
-package kProgSS2023;
+package second;
+/**
+ * @version 42, 31.03.2023
+ * @author Jan Obernberger
+ **/
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,28 +20,23 @@ public class Clones extends Frame implements ActionListener {
         for (Button e : buttons) {
             e.addActionListener(this);
             this.add(e);
+            this.addWindowListener(new WindowQuitter());
+            this.setSize(400, 300);
+            this.setVisible(true);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("cycle")) {
-            setBackground(colors[(iColor++ % (colors.length - 1))]);
-            repaint();
+            setBackground(colors[(++iColor % (colors.length - 1))]);
         } else if (e.getActionCommand().equals("clone")) {
-            Clones tmp = new Clones();
-            tmp.setBackground(iColor == 0 ? Color.white : colors[(iColor % (colors.length - 1))-1]);
-            tmp.iColor = this.iColor;
-            tmp.addWindowListener(new WindowQuitter());
-            tmp.setSize(400, 300);
-            tmp.setVisible(true);
+            new Clones() {
+            }.setBackground(colors[(iColor % (colors.length - 1))]);
         }
     }
 
     public static void main(String[] args) {
-        Clones clones = new Clones();
-        clones.addWindowListener(new WindowQuitter());
-        clones.setSize(400, 300);
-        clones.setVisible(true);
+        new Clones();
     }
 }
