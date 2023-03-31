@@ -50,7 +50,7 @@ public class Safe extends Frame implements ActionListener {
             case 8:
                 step = transition(e, t[7], ++step);
             case 9:
-                System.exit(0);
+               if(step!=1) System.exit(0);
         }
     }
 
