@@ -3,10 +3,8 @@ package kProgSS2023;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class Clones extends Frame implements ActionListener {
-    ArrayList<ActionListener> clones = new ArrayList<>();
 
     Button[] buttons = {new Button("cycle"), new Button("clone")};
     Color[] colors = {Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.pink,
@@ -28,13 +26,12 @@ public class Clones extends Frame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("clone")) {
             Clones tmp = new Clones();
-            tmp.setBackground(colors[(iColor - 1 % (colors.length - 1))]);
+            tmp.setBackground(iColor == 0 ? Color.white : colors[(iColor % (colors.length - 1))-1]);
+            tmp.iColor = this.iColor;
             tmp.addWindowListener(new WindowQuitter());
             tmp.setSize(400, 300);
             tmp.setVisible(true);
-            clones.add(tmp);
         }
-        ;
     }
 
     public static void main(String[] args) {
