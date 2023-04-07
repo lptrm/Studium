@@ -15,23 +15,19 @@ import java.awt.*;
  * @version 42, 07.04.23
  */
 public class SliderTemp extends JFrame implements ChangeListener {
-    JSlider[] sliders = {
+    private final JSlider[] sliders = {
             new JSlider(SwingConstants.HORIZONTAL, -300, 1000, 0),
             new JSlider(SwingConstants.HORIZONTAL, -500, 1000, 0)};
-    JTextField[] textFields = {new JTextField(4), new JTextField(4)};
+    private final JTextField[] textFields = {new JTextField(4), new JTextField(4)};
 
-    boolean tempIsAdjusting;
-    int celsius = 0;
-    int fahrenheit = 32;
+    private boolean tempIsAdjusting;
+    private int celsius = 0;
+    private int fahrenheit = 32;
 
 
     public SliderTemp() {
-        //Container für Elemente
-        Container cp = getContentPane();
-        cp.setLayout(new FlowLayout());
         //Sliderkonfiguration
-        for (var e : sliders) {
-
+        for(var e : sliders){
             e.setMajorTickSpacing(100);
             e.setMinorTickSpacing(50);
             e.setPaintTicks(true);
@@ -42,7 +38,7 @@ public class SliderTemp extends JFrame implements ChangeListener {
         sliders[0].setBorder(new TitledBorder("Celsius"));
         sliders[0].setName("sliderA");
         sliders[0].setToolTipText("Temperatur in Celsius einstellen");
-        sliders[1].setBorder(new TitledBorder("Fahrenheit"));// Rahmen mit Titel
+        sliders[1].setBorder(new TitledBorder("Fahrenheit"));
         sliders[1].setName("sliderB");
         sliders[1].setToolTipText("Temperatur in Fahrenheit einstellen");
         //Textfeldkonfiguration
@@ -50,11 +46,14 @@ public class SliderTemp extends JFrame implements ChangeListener {
         textFields[0].setEditable(false);
         textFields[1].setToolTipText("Fahrenheit-Temperatur");
         textFields[1].setEditable(false);
+        //Container für Elemente
+        Container cp = getContentPane();
+        cp.setLayout(new FlowLayout());
         cp.add(textFields[0]);
         cp.add(sliders[0]);
         cp.add(textFields[1]);
         cp.add(sliders[1]);
-        //Temperatur initialisieren und anzeigen
+        //Temperatur initialisieren
         displayTemp();
         //Fensterkonfiguration
         setTitle("Temperatur-Rechner");
@@ -115,7 +114,7 @@ public class SliderTemp extends JFrame implements ChangeListener {
     }
 
     /**
-     * Programm SliderTemp starten
+     * Main Methode um Programm SliderTemp zu testen
      */
     public static void main(String[] args) {
         new SliderTemp();

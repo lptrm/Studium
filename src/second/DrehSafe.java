@@ -11,7 +11,7 @@ import java.util.TimerTask;
  * kombination erraten werden, um das Programm erfolgreich (Exit Code 0) zu beenden. Wobei die Farbe des Hintergrunds
  * bzw. der Buttons grün ist, solange der User sich auf dem richtigen Pfad befindet und rot wird, wenn der User eine
  * Fehleingabe tätigt. (Vgl. Zustandsautomaten).
- * In dieser Version sind die Zahlen im Kreis angeordnet und rotieren im Uhrzeigersinn im Sekundentakt. So lange sich
+ * In dieser Version sind die Zahlen im Kreis angeordnet und rotieren im Uhrzeigersinn im Sekundentakt. Solange sich
  * der User auf dem richtigen Pfad befindet, sind die JButtons grün, bei einer Fehleingabe werden sie rot und zusätzlich
  * ändert sich die Drehrichtung.
  *
@@ -19,10 +19,9 @@ import java.util.TimerTask;
  * @version 42, 07.04.23
  */
 public class DrehSafe extends JFrame implements ActionListener {
-    int state = 0;
-    boolean direction = true;
-    JButton[] buttons = new JButton[10];
-    Timer timer = new Timer();
+    private int state = 0;
+    private boolean direction = true;
+    private final JButton[] buttons = new JButton[10];
 
     DrehSafe() { // Konstruktor
         setTitle("DrehSafe");
@@ -49,22 +48,22 @@ public class DrehSafe extends JFrame implements ActionListener {
         setSize(300, 200);
         setLocation(300, 300);
         setVisible(true);
-        //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt in ms
+        Timer timer = new Timer();
+        /*
+          TimerTask-Objekt, in welchem die run Methode implementiert wird, die den Wechsel der Labels der Buttons bewirkt.
+         */
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                int k = direction ? 1 : 9;
+                for (int i = 0; i < 10; i++) {
+                    buttons[i].setText(((Integer.parseInt(buttons[i].getText()) + k) % 10) + "");
+                }
+            }
+        };
+        //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
         timer.scheduleAtFixedRate(task, 3000, 1000);
     }
-
-    /**
-     * TimerTask-Objekt, in welchem die run Methode implementiert wird, die den Wechsel der Labels der Buttons bewirkt.
-     */
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            int k = direction ? 1 : 9;
-            for (int i = 0; i < 10; i++) {
-                buttons[i].setText(((Integer.parseInt(buttons[i].getText()) + k) % 10) + "");
-            }
-        }
-    };
 
     /**
      * Implementierung des ActionListener-Interface

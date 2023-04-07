@@ -13,25 +13,19 @@ import javax.swing.*;
  * @version 42, 07.04.2023
  */
 public class IdealWeight extends JFrame implements ActionListener {
-    JRadioButton[] gender = {new JRadioButton("Male", true), new JRadioButton("Female", false)};
-    JRadioButton[] height = {
+    private final JRadioButton[] gender = {new JRadioButton("Male", true), new JRadioButton("Female", false)};
+    private final JRadioButton[] height = {
             new JRadioButton("60 to 64 inches", true),
             new JRadioButton("64 to 68 inches", false),
             new JRadioButton("68 to 72 inches", false),
             new JRadioButton("72 to 76 inches", false),
             new JRadioButton("76 to 80 inches", false)};
-    ButtonGroup genderGroup;
-    JPanel genderPanel;
-    ButtonGroup heightGroup;
-    JPanel heightPanel;
-    JTextField resultText;
-    JLabel resultLabel;
-    JPanel resultPanel;
+    private final JTextField resultText;
 
     public IdealWeight() {
         //Gender Panel erstellen
-        genderGroup = new ButtonGroup();
-        genderPanel = new JPanel();
+        ButtonGroup genderGroup = new ButtonGroup();
+        JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new BoxLayout(genderPanel, BoxLayout.Y_AXIS));
         genderPanel.add(new JLabel("Your Gender"));
         for (var e : gender) {
@@ -40,8 +34,8 @@ public class IdealWeight extends JFrame implements ActionListener {
             e.addActionListener(this);
         }
         //Height Panel erstellen
-        heightGroup = new ButtonGroup();
-        heightPanel = new JPanel();
+        ButtonGroup heightGroup = new ButtonGroup();
+        JPanel heightPanel = new JPanel();
         heightPanel.setLayout(
                 new BoxLayout(heightPanel, BoxLayout.Y_AXIS));
         heightPanel.add(new JLabel("Your Height"));
@@ -53,8 +47,8 @@ public class IdealWeight extends JFrame implements ActionListener {
         //Ausgabetextfeld erstellen
         resultText = new JTextField(10);
         resultText.setEditable(false);
-        resultLabel = new JLabel("Ideal Weight");
-        resultPanel = new JPanel();
+        JLabel resultLabel = new JLabel("Ideal Weight");
+        JPanel resultPanel = new JPanel();
         resultPanel.add(resultLabel);
         resultPanel.add(resultText);
         //Layout-Manager
