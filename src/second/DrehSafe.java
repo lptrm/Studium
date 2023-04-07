@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  * Ein GUI-Programm auf Grundlage des Programmes Safe. Hierbei muss über die Eingabe durch Buttons die richtige Zahlen-
  * kombination erraten werden, um das Programm erfolgreich (Exit Code 0) zu beenden. Wobei die Farbe des Hintergrunds
@@ -13,20 +14,22 @@ import java.util.TimerTask;
  * In dieser Version sind die Zahlen im Kreis angeordnet und rotieren im Uhrzeigersinn im Sekundentakt. So lange sich
  * der User auf dem richtigen Pfad befindet, sind die JButtons grün, bei einer Fehleingabe werden sie rot und zusätzlich
  * ändert sich die Drehrichtung.
+ *
  * @author Jan Obernberger
  * @version 42, 07.04.23
  */
 public class DrehSafe extends JFrame implements ActionListener {
-    int s = 0; // Status, zählt korrekte Zeichen
+    int state = 0;
     boolean direction = true;
     JButton[] buttons = new JButton[10];
     Timer timer = new Timer();
+
     DrehSafe() { // Konstruktor
         setTitle("DrehSafe");
         Container c = getContentPane();
-        c.setLayout(new GridLayout(4, 3)); // Layout Manager);
-        for (int i = 0; i < 10; i++) { // 10 Knöpfe registrieren
-            buttons[i] = new JButton("" + i); // und einfügen
+        c.setLayout(new GridLayout(4, 3));
+        for (int i = 0; i < 10; i++) {
+            buttons[i] = new JButton("" + i);
             buttons[i].setFont(new Font("Courier", Font.BOLD, 34));
             buttons[i].addActionListener(this);
             add(buttons[i]);
@@ -46,53 +49,58 @@ public class DrehSafe extends JFrame implements ActionListener {
         setSize(300, 200);
         setLocation(300, 300);
         setVisible(true);
-        timer.scheduleAtFixedRate(task, 5000, 1000);
+        //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt in ms
+        timer.scheduleAtFixedRate(task, 3000, 1000);
     }
+
     /**
-     *
+     * TimerTask-Objekt, in welchem die run Methode implementiert wird, die den Wechsel der Labels der Buttons bewirkt.
      */
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
             int k = direction ? 1 : 9;
-            for (int i = 0; i < 10; i++){
-                buttons[i].setText(((Integer.parseInt(buttons[i].getText())+k)%10)+"");
+            for (int i = 0; i < 10; i++) {
+                buttons[i].setText(((Integer.parseInt(buttons[i].getText()) + k) % 10) + "");
             }
         }
     };
 
     /**
-     *
+     * Implementierung des ActionListener-Interface
+     * Zustandsautomat zur Zahlenfolge 8-2-2-4-7-2-5-3-0-1 realisiert mit Swicht-Case Anweisung. Bei falschem Raten wird
+     * hier zusätzlich die Drehrichtung über einen Boolean geändert.
      */
-
+    @Override
     public void actionPerformed(ActionEvent evt) {
         switch (Integer.parseInt(evt.getActionCommand())) {
-            case 0 -> s = (s == 8) ? s + 1 : 0;
-            case 1 -> s = (s == 9) ? s + 1 : 0;
-            case 2 -> s = (s == 1 || s == 2 || s == 5) ? s + 1 : 0;
-            case 3 -> s = (s == 7) ? s + 1 : 1;
-            case 4 -> s = (s == 3) ? s + 1 : 1;
-            case 5 -> s = (s == 6) ? s + 1 : 1;
-            case 7 -> s = (s == 4) ? s + 1 : 1;
-            case 8 -> s = (s == 0) ? s + 1 : 1;
-            default -> s = 0;
+            case 0 -> state = (state == 8) ? state + 1 : 0;
+            case 1 -> state = (state == 9) ? state + 1 : 0;
+            case 2 -> state = (state == 1 || state == 2 || state == 5) ? state + 1 : 0;
+            case 3 -> state = (state == 7) ? state + 1 : 0;
+            case 4 -> state = (state == 3) ? state + 1 : 0;
+            case 5 -> state = (state == 6) ? state + 1 : 0;
+            case 7 -> state = (state == 4) ? state + 1 : 0;
+            case 8 -> state = (state == 0) ? state + 1 : 1;
+            default -> state = 0;
         }
         Color col;
-        if (s == 0) { // Keine Taste
+        if (state == 0) {
             col = Color.red;
-            direction = false;
-        } else { // richtiger Weg
+            direction = !direction;
+        } else {
             col = Color.green;
         }
-        if (s == 10) { // Kombination geraten
+        if (state == 10) {
             System.exit(0);
         }
         for (JButton b : buttons) b.setBackground(col);
     }
+
     /**
-     *
+     * Main Methode zum Testen des Programms
      */
     public static void main(String[] args) {
-        DrehSafe drehSafe= new DrehSafe();
+        DrehSafe drehSafe = new DrehSafe();
     }
 }

@@ -15,8 +15,10 @@ import java.awt.*;
  * @version 42, 07.04.23
  */
 public class SliderTemp extends JFrame implements ChangeListener {
-    JSlider sliderA, sliderB;
-    JTextField textA, textB;
+    JSlider[] sliders = {
+            new JSlider(SwingConstants.HORIZONTAL, -300, 1000, 0),
+            new JSlider(SwingConstants.HORIZONTAL, -500, 1000, 0)};
+    JTextField[] textFields = {new JTextField(4), new JTextField(4)};
 
     boolean tempIsAdjusting;
     int celsius = 0;
@@ -24,48 +26,41 @@ public class SliderTemp extends JFrame implements ChangeListener {
 
 
     public SliderTemp() {
+        //Container für Elemente
+        Container cp = getContentPane();
+        cp.setLayout(new FlowLayout());
+        //Sliderkonfiguration
+        for (var e : sliders) {
+
+            e.setMajorTickSpacing(100);
+            e.setMinorTickSpacing(50);
+            e.setPaintTicks(true);
+            e.setPaintLabels(true);
+            e.setPreferredSize(new Dimension(500, 70));
+            e.addChangeListener(this);
+        }
+        sliders[0].setBorder(new TitledBorder("Celsius"));
+        sliders[0].setName("sliderA");
+        sliders[0].setToolTipText("Temperatur in Celsius einstellen");
+        sliders[1].setBorder(new TitledBorder("Fahrenheit"));// Rahmen mit Titel
+        sliders[1].setName("sliderB");
+        sliders[1].setToolTipText("Temperatur in Fahrenheit einstellen");
+        //Textfeldkonfiguration
+        textFields[0].setToolTipText("Celsius-Temperatur");
+        textFields[0].setEditable(false);
+        textFields[1].setToolTipText("Fahrenheit-Temperatur");
+        textFields[1].setEditable(false);
+        cp.add(textFields[0]);
+        cp.add(sliders[0]);
+        cp.add(textFields[1]);
+        cp.add(sliders[1]);
+        //Temperatur initialisieren und anzeigen
+        displayTemp();
         //Fensterkonfiguration
         setTitle("Temperatur-Rechner");
         setSize(600, 200);
         setResizable(false); // ... fixieren
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //Sliderkonfiguration
-        sliderA = new JSlider(SwingConstants.HORIZONTAL, -300, 1000, 0);
-        sliderA.setBorder(new TitledBorder("Celsius")); // Rahmen mit Titel
-        sliderA.setMajorTickSpacing(100);
-        sliderA.setMinorTickSpacing(50);
-        sliderA.setPaintTicks(true);
-        sliderA.setPaintLabels(true);
-        sliderA.setPreferredSize(new Dimension(500, 70));
-        sliderA.addChangeListener(this);
-        sliderA.setName("sliderA");
-        sliderA.setToolTipText("Temperatur in Celsius einstellen");
-        sliderB = new JSlider(SwingConstants.HORIZONTAL, -500, 1000, 0);
-        sliderB.setBorder(new TitledBorder("Fahrenheit"));// Rahmen mit Titel
-        sliderB.setMajorTickSpacing(100);
-        sliderB.setMinorTickSpacing(50);
-        sliderB.setPaintTicks(true);
-        sliderB.setPaintLabels(true);
-        sliderB.setPreferredSize(new Dimension(500, 70));
-        sliderB.addChangeListener(this);
-        sliderB.setName("sliderB");
-        sliderB.setToolTipText("Temperatur in Fahrenheit einstellen");
-        //Textfeldkonfiguration
-        textA = new JTextField(4);
-        textA.setToolTipText("Celsius-Temperatur");
-        textA.setEditable(false);
-        textB = new JTextField(4);
-        textB.setToolTipText("Fahrenheit-Temperatur");
-        textB.setEditable(false);
-        //Container für Elemente
-        Container cp = getContentPane();
-        cp.setLayout(new FlowLayout());
-        cp.add(textA);
-        cp.add(sliderA);
-        cp.add(textB);
-        cp.add(sliderB);
-        //Temperatur initialisieren und anzeigen
-        displayTemp();
         setVisible(true);
     }
 
@@ -93,10 +88,10 @@ public class SliderTemp extends JFrame implements ChangeListener {
      */
     void displayTemp() {
         tempIsAdjusting = true;
-        textA.setText("" + celsius);
-        sliderA.setValue(celsius);
-        textB.setText("" + fahrenheit);
-        sliderB.setValue(fahrenheit);
+        textFields[0].setText("" + celsius);
+        sliders[0].setValue(celsius);
+        textFields[1].setText("" + fahrenheit);
+        sliders[1].setValue(fahrenheit);
         tempIsAdjusting = false;
     }
 
