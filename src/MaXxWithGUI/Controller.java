@@ -1,29 +1,23 @@
-package MaXx; /**
- * @author Jan Obernberger, Kevin Goldmann, Lau Kailany, Florijan Deljija, Benno Dinsch
+package MaXxWithGUI;
+
+/**
+ * @author Jan Obernberger
  * @version X, 11.01.2023
  **/
-
-import java.io.IOException;
 import java.math.BigInteger;
 
 public class Controller {
     /**
      * Steuerflags
      */
-    private boolean menu;
-    private boolean end;
-    private boolean eingabe;
-    private boolean player;
-    private boolean recWat;
-    private static boolean online;
+    private boolean menu, end, eingabe, player, recWat;
     private int playerIndex;
     private final Spielfeld spielfeld;
     private Spielfigur winner;
     private final Spielfigur[] spielfigur;
     private final Visualisierung visualisierung;
-    private final Server server;
 
-    public Controller(Spielfeld spielfeld, Visualisierung visualisierung) throws IOException {
+    public Controller(Spielfeld spielfeld, Visualisierung visualisierung) {
         this.menu = false;
         this.end = false;
         this.eingabe = true;
@@ -34,21 +28,20 @@ public class Controller {
         this.visualisierung = visualisierung;
         this.winner = null;
         this.spielfigur = spielfeld.getF();
-        online = HMI.getMode();
-        this.server = online ? new Server() : null;
         visualisierung.init(spielfeld);
         HMI.begin();
     }
 
     /**
-     * Methode, welche die zwei Spielfiguren abwechselnd mit dem MaXx.Spielfeld interagierend lässt (siehe Aufga-
-     * benstellung von Herrn Heinz im Wintersemester 2022 Einleitung 9 Spiel "MaXx.MaXx". Als void, da Informationen zum
+     * Methode, welche die zwei Spielfiguren abwechselnd mit dem Spielfeld interagierend lässt (siehe Aufga-
+     * benstellung von Herrn Heinz im Wintersemester 2022 Einleitung 9 Spiel "MaXx". Als void, da Informationen zum
      * aktuellen Spielverlauf in der Instanz des Spielfeldes bzw. der Spielfiguren (durch Referenzen aneinander gebunden)
      */
-    public void zug() throws IOException, ClassNotFoundException {
+
+    public void zug() {
         playerIndex = player ? 0 : 1;
         if (eingabe) {
-            HMI.print(spielfeld.toString());
+            HMI.print(visualisierung.toString());
             for (Spielfigur f : spielfigur) {
                 Fraction points = f.getPunkte();
                 if (!points.getNumerator().equals(BigInteger.ZERO) && !points.getDenominator().equals(BigInteger.ZERO))
@@ -60,7 +53,7 @@ public class Controller {
         eingabe = false;
         for (Richtung r : spielfigur[playerIndex].getDir()) {
             if (r.getShrt().equalsIgnoreCase(s2)) {
-                //Eingabe wird true, wenn der eingegebene String mit einer legitimen MaXx.Richtung der MaXx.Spielfigur des
+                //Eingabe wird true, wenn der eingegebene String mit einer legitimen Richtung der Spielfigur des
                 //spieler übereinstimmt
                 eingabe = true;
                 break;
@@ -97,7 +90,7 @@ public class Controller {
         }
     }
 
-    private void menuCall() throws IOException, ClassNotFoundException {
+    private void menuCall() {
         menu = true;
         HMI.menuEntry();
         while (menu) {
@@ -140,7 +133,7 @@ public class Controller {
         return end;
     }
 
-    public void setEnd() throws IOException {
+    public void setEnd() {
         if (!menu) {
             HMI.print(visualisierung.toString());
             HMI.end(winner);
@@ -155,8 +148,5 @@ public class Controller {
         isEnd();
         player = !player;
 
-    }
-    public static boolean isOnline(){
-        return online;
     }
 }

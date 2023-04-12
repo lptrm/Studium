@@ -1,4 +1,4 @@
-package MaXx;
+package MaXxServerClient;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

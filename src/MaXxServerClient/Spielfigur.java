@@ -1,4 +1,4 @@
-package MaXx;
+package MaXxServerClient;
 
 /**
  * @author Jan Obernberger, Kevin Goldmann, Lau Kailany, Florijan Deljija, Benno Dinsch

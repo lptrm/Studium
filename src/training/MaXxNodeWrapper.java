@@ -1,6 +1,6 @@
 package training;
 
-import MaXx.Fraction;
+import MaXxServerClient.Fraction;
 
 import java.util.Objects;
 

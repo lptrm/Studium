@@ -100,6 +100,6 @@ public class DrehSafe extends JFrame implements ActionListener {
      * Main Methode zum Testen des Programms
      */
     public static void main(String[] args) {
-        DrehSafe drehSafe = new DrehSafe();
+        new DrehSafe();
     }
 }

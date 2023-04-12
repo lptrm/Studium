@@ -1,7 +1,7 @@
-package MaXx;
+package MaXxWithGUI;
 
 /**
- * @author Jan Obernberger, Kevin Goldmann, Lau Kailany, Florijan Deljija, Benno Dinsch
+ * @author Jan Obernberger
  * @version X, 11.01.2023
  **/
 public enum Richtung {

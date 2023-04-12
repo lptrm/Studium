@@ -1,7 +1,6 @@
-package MaXx;
-
+package MaXxWithGUI;
 /**
- * @author Jan Obernberger, Kevin Goldmann, Lau Kailany, Florijan Deljija, Benno Dinsch
+ * @author Jan Obernberger
  * @version X, 11.01.2023
  **/
 
@@ -34,7 +33,6 @@ public class Visualisierung {
     private final char[][] visu;
     private Fraction[][] playground;
     private int[] posZeile, posSpalte;
-    char[][] temp = new char[50][];
 
 
     public Visualisierung() {
@@ -128,7 +126,7 @@ public class Visualisierung {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder(2145);
+        StringBuilder sb = new StringBuilder();
         for (char[] row : this.visu) {
             sb.append(row);
             sb.append("\n");
@@ -143,7 +141,6 @@ public class Visualisierung {
         boolean zeilenSprung = true;
         for (int i = 0; i < this.visu.length; i++) {
             char[] row = this.visu[i];
-            temp[i] = row;
             for (int j = 0; j < row.length; j++) {
                 if (i % (zeilenInnen + 1) == 0 && j % (spaltenInnen + 1) == 0) {
                     if (i == 0 && j == 0) {

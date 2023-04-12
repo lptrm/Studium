@@ -1,6 +1,6 @@
 package training;
 
-import MaXx.*;
+import MaXxServerClient.*;
 
 import java.io.IOException;
 import java.math.BigInteger;

@@ -74,7 +74,7 @@ public class SliderTemp extends JFrame implements ChangeListener {
     }
 
     /**
-     * Setzt die Temperaturen auf Grundlagen der Eingabe in Fahrenheit über Aufruf von setCelsius()
+     * Setzt die Temperaturen auf Grundelagen der Eingabe in Fahrenheit über Aufruf von setCelsius()
      *
      * @param f : Wert des Fahrenheit-Sliders nach Änderung
      */

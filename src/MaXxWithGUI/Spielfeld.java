@@ -1,6 +1,7 @@
-package MaXx; /**
+package MaXxWithGUI;
+/**
  * @version X, 11.01.2023
- * @author Jan Obernberger, Kevin Goldmann, Lau Kailany, Florijan Deljija, Benno Dinsch
+ * @author Jan Obernberger
  **/
 
 import java.math.BigInteger;
@@ -76,23 +77,9 @@ public class Spielfeld {
 
         return res;
     }
-    public Fraction[][] switchValues(){
-        Fraction[][] res = new Fraction[this.zeilen][this.spalten];
-        int i = 0;
-        int j;
-        for (Fraction[] fr : this.feld){
-            j = 0;
-            for (Fraction f : fr){
-                res[i][j] = new Fraction(f.getDenominator(), f.getNumerator());
-                j++;
-            }
-            i++;
-        }
-        return res;
-    }
 
     public void setValue(int x, int y) {
-        this.feld[x][y] = new Fraction(BigInteger.ZERO, BigInteger.ZERO);
+        this.feld[x][y] = new Fraction(0, 0);
     }
 
     public Fraction getValue(int x, int y) {
