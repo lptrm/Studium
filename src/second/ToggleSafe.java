@@ -18,12 +18,14 @@ import java.util.TimerTask;
  * @author Jan Obernberger
  * @version 42, 07.04.23
  */
-public class DrehSafe extends JFrame implements ActionListener {
+public class ToggleSafe extends JFrame implements ActionListener {
     private int state = 0;
     private boolean direction = true;
     private final JButton[] buttons = new JButton[10];
+    private long sleeptime = 1000;
+    Timer timer = new Timer();
 
-    DrehSafe() { // Konstruktor
+    ToggleSafe() { // Konstruktor
         setTitle("DrehSafe");
         Container c = getContentPane();
         c.setLayout(new GridLayout(4, 3));
@@ -48,11 +50,13 @@ public class DrehSafe extends JFrame implements ActionListener {
         setSize(300, 200);
         setLocation(300, 300);
         setVisible(true);
-        Timer timer = new Timer();
-        /*
-          TimerTask-Objekt, in welchem die run Methode implementiert wird, die den Wechsel der Labels der Buttons bewirkt.
-         */
-        TimerTask task = new TimerTask() {
+        generateTimerTask(1);
+        //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
+    }
+private void generateTimerTask(int delay){
+        timer.cancel();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 int k = direction ? 1 : 9;
@@ -60,10 +64,9 @@ public class DrehSafe extends JFrame implements ActionListener {
                     buttons[i].setText(((Integer.parseInt(buttons[i].getText()) + k) % 10) + "");
                 }
             }
-        };
-        //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
-        timer.scheduleAtFixedRate(task, 3000, 1000);
-    }
+        }, delay, sleeptime >=1 ? sleeptime : 1);
+}
+
 
     /**
      * Implementierung des ActionListener-Interface
@@ -72,21 +75,26 @@ public class DrehSafe extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
+        System.out.println("test");
         switch (Integer.parseInt(evt.getActionCommand())) {
-            case 0 -> state = (state == 8) ? state + 1 : 0;
+            case 0 -> state = (state == 6) ? state + 1 : 0;
             case 1 -> state = (state == 9) ? state + 1 : 0;
-            case 2 -> state = (state == 1 || state == 2 || state == 5) ? state + 1 : 0;
-            case 3 -> state = (state == 7) ? state + 1 : 0;
-            case 4 -> state = (state == 3) ? state + 1 : 0;
-            case 5 -> state = (state == 6) ? state + 1 : 0;
-            case 7 -> state = (state == 4) ? state + 1 : 0;
+            case 2 -> state = (state == 2) ? state + 1 : 0;
+            case 3 -> state = (state == 5) ? state + 1 : 0;
+            case 4 -> state = (state == 8) ? state + 1 : 0;
+            case 5 -> state = (state == 1) ? state + 1 : 0;
+            case 6 -> state = (state == 4) ? state + 1 : 0;
+            case 7 -> state = (state == 7) ? state + 1 : 0;
             case 8 -> state = 1;
+            case 9 -> state = (state == 3) ? state + 1 : 0;
             default -> state = 0;
         }
         Color col;
         if (state == 0) {
             col = Color.red;
             direction = !direction;
+            sleeptime *= 2.0 /3;
+            generateTimerTask(0);
         } else {
             col = Color.green;
         }
@@ -100,6 +108,6 @@ public class DrehSafe extends JFrame implements ActionListener {
      * Main Methode zum Testen des Programms
      */
     public static void main(String[] args) {
-        new DrehSafe();
+        new ToggleSafe();
     }
 }

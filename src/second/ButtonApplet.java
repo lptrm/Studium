@@ -27,7 +27,7 @@ public class ButtonApplet extends JFrame { // JFrame ableiten
 
         Als Lamda-Ausdruck
 
-         ActionListener al = e-> txt.setText(((JButton)e.getSource()).getText());
+         ActionListener al = e-> txt.setText(((JButton)e.getSource()).getText()); //Durch das Interface hat ActionListener in jedem Fall ein ActionEvent, welches nicht explizit als solches benannt werden muss
 
      */
     BL al = new BL(); // einen Listener erzeugen

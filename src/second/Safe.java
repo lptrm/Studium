@@ -29,7 +29,7 @@ public class Safe extends Frame implements ActionListener {
         // 0 1 2 3 4 5 6 7 8 Zustände ...
         switch (Integer.parseInt(e.getActionCommand())) {
             case 0 -> s = (s == 2 || s == 5) ? s + 1 : 0;
-            case 1 -> s = (s == 1) ? s + 1 : 0;
+            case 1 -> s = (s == 1 || s == 3) ? s + 1 : 0;
             case 2 -> s = (s == 4 || s == 6) ? s + 1 : 0;
             case 3 -> s = (s == 3 || s == 7) ? s + 1 : 1;
             default -> s = 0;

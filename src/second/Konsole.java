@@ -3,8 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 public class Konsole {
     public static String title(Object o) { // Liefert den Klassennamen
-        String t = o.getClass().toString(); // eines Objektes für Titel
-        if (t.indexOf("class") != -1) t = t.substring(6);
+        String t = o.getClass().getSimpleName(); // eines Objektes für Titel
         System.out.println ("Konsole: running "+t);
         return t;
     }
