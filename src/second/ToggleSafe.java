@@ -23,7 +23,7 @@ public class ToggleSafe extends JFrame implements ActionListener {
     private boolean direction = true;
     private final JButton[] buttons = new JButton[10];
     private long sleeptime = 1000;
-    Timer timer = new Timer();
+    Timer timer = null;
 
     ToggleSafe() { // Konstruktor
         setTitle("DrehSafe");
@@ -54,7 +54,9 @@ public class ToggleSafe extends JFrame implements ActionListener {
         //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
     }
 private void generateTimerTask(int delay){
+    if(timer!=null) {
         timer.cancel();
+    }
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -94,7 +96,8 @@ private void generateTimerTask(int delay){
             col = Color.red;
             direction = !direction;
             sleeptime *= 2.0 /3;
-            generateTimerTask(0);
+            System.out.println(sleeptime);
+           generateTimerTask(0);
         } else {
             col = Color.green;
         }
