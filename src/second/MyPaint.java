@@ -8,17 +8,30 @@ import java.util.ArrayList;
 public class MyPaint extends JFrame {
     Color[] colors = {Color.red, Color.blue, Color.green, Color.white, Color.pink, Color.magenta};
     Color repCol = Color.red;
+    JPanel scope = new CircularPanel();
     ArrayList<JPanel> pixels = new ArrayList<>();
     Boolean paint = false;
     Boolean erease = false;
     int i = 0;
+
 
     MyPaint() {
         setTitle("MyPaint");
         setSize(1000, 1000);
         setResizable(false);
         Container cp = getContentPane();
-        cp.setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
+        cp.setLayout(new BoxLayout(cp, BoxLayout.X_AXIS));
+        JLabel label = new JLabel();
+        label.setText("selected color");
+        cp.add(label);
+        label.setAlignmentX(0);
+        label.setAlignmentY(0);
+
+        scope.setPreferredSize(new Dimension(300,300));
+        scope.setMaximumSize(new Dimension(300,300));
+        cp.add(scope);
+        scope.setAlignmentY(300);
+        scope.setAlignmentX(0);
 
         JPanel canvas = new JPanel();
         canvas.setLayout(new GridLayout(100,100));
@@ -26,7 +39,8 @@ public class MyPaint extends JFrame {
         canvas.setMaximumSize(new Dimension(500,500));
         canvas.setPreferredSize(new Dimension(500,500));
         cp.add(canvas);
-        canvas.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        canvas.setAlignmentY(0);
+        canvas.setAlignmentX(400);
         System.out.println(canvas.getX() + " " + canvas.getY());
 
         for (int i = 0; i < 10000; i++) {
@@ -35,6 +49,7 @@ public class MyPaint extends JFrame {
         cp.addMouseWheelListener(e -> {
             i = ++i % colors.length;
             repCol = colors[i];
+            scope.repaint();
         });
         cp.addMouseListener(new MouseAdapter() {
             /**
@@ -223,6 +238,17 @@ public class MyPaint extends JFrame {
 
 
         setVisible(true);
+    }
+    class CircularPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            g.drawOval(0, 0,200 ,200);
+            g.setColor(repCol);
+            g.fillOval(0,0,200,200);
+
+
+        }
+
     }
 
     public static void main(String[] args) {
