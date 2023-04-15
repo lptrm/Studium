@@ -12,21 +12,22 @@ import java.util.ArrayList;
  * by rotating the mouse wheel. The chosen color will be shown in a colored circe on the left-side of the frame besides
  * some information on how to use the program and a clearing button which will set all pixels white when pressed.
  * task of CS course "Komplexe Programme" (13.04.2023)
+ *
  * @author Jan Obernberger
  * @verion 42, 15.04.2023
  */
 public class MyPaint extends JFrame {
-    Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.gray, Color.green, Color.lightGray,
-    Color.magenta, Color.orange, Color.pink, Color.red, Color.white, Color.yellow};
+    private final Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.gray, Color.green, Color.lightGray,
+            Color.magenta, Color.orange, Color.pink, Color.red, Color.white, Color.yellow};
     // used to generate the preview of the color to be drawn
-    Color repCol = Color.black;
+    private Color repCol = Color.black;
     ArrayList<JPanel> pixels = new ArrayList<>();
     // flags
-    Boolean paint = false;
-    Boolean erase = false;
+    private Boolean paint = false;
+    private Boolean erase = false;
     // index to select the color to be drawn
-    int i = 0;
-    JPanel preview = new JPanel(){
+    private int i = 0;
+    private final JPanel preview = new JPanel() {
         /**
          * displays a circle with 150p diameter in the color the user choose to draw
          * @param g the <code>Graphics</code> object to protect
@@ -129,8 +130,8 @@ public class MyPaint extends JFrame {
                  */
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    if(e.getButton() == MouseEvent.BUTTON1) paint = false;
-                    if(e.getButton() == MouseEvent.BUTTON3) erase = false;
+                    if (e.getButton() == MouseEvent.BUTTON1) paint = false;
+                    if (e.getButton() == MouseEvent.BUTTON3) erase = false;
                 }
 
                 /**
@@ -193,6 +194,7 @@ public class MyPaint extends JFrame {
 
     /**
      * test MyPaint by using the Konsole program given by prof. Heinz
+     *
      * @param args : none expected
      */
 

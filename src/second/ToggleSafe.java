@@ -20,7 +20,7 @@ import java.util.TimerTask;
  * @author Jan Obernberger
  * @version ++42, 15.04.23
  */
-public class ToggleSafe extends JFrame implements ActionListener{
+public class ToggleSafe extends JFrame implements ActionListener {
     private int state = 0;
     private boolean direction = true;
     private final JButton[] buttons = new JButton[10];
@@ -29,7 +29,6 @@ public class ToggleSafe extends JFrame implements ActionListener{
     static final ArrayList<ToggleSafe> TOGGLE_SAFES = new ArrayList<>();
 
     ToggleSafe() { // Konstruktor
-        setTitle("DrehSafe");
         Container c = getContentPane();
         c.setLayout(new GridLayout(4, 3));
         for (int i = 0; i < 10; i++) {
@@ -50,16 +49,14 @@ public class ToggleSafe extends JFrame implements ActionListener{
         c.add(buttons[3]);
         c.add(buttons[4]);
         c.add(buttons[5]);
-        setSize(300, 200);
-        setLocation(300, 300);
-        setVisible(true);
         generateTimerTask(1000);
         //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
     }
-private void generateTimerTask(int delay){
-    if(timer!=null) {
-        timer.cancel();
-    }
+
+    private void generateTimerTask(int delay) {
+        if (timer != null) {
+            timer.cancel();
+        }
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -69,8 +66,8 @@ private void generateTimerTask(int delay){
                     buttons[i].setText(((Integer.parseInt(buttons[i].getText()) + k) % 10) + "");
                 }
             }
-        }, delay, sleeptime >=1 ? sleeptime : 1);
-}
+        }, delay, sleeptime >= 1 ? sleeptime : 1);
+    }
 
 
     /**
@@ -96,17 +93,15 @@ private void generateTimerTask(int delay){
         if (state == 0) {
             col = Color.red;
             direction = !direction;
-            sleeptime *= 2.0 /3;
-            System.out.println(sleeptime);
+            sleeptime *= 2.0 / 3;
             TOGGLE_SAFES.add(new ToggleSafe());
-            System.out.println(TOGGLE_SAFES.size());
-           generateTimerTask(0);
+            generateTimerTask(0);
         } else {
             col = Color.green;
 
         }
         if (state == 1) {
-            if(TOGGLE_SAFES.size()==1) {
+            if (TOGGLE_SAFES.size() == 1) {
                 System.exit(0);
             }
             dispose();
@@ -118,6 +113,6 @@ private void generateTimerTask(int delay){
      * Main Methode zum Testen des Programms
      */
     public static void main(String[] args) {
-        new ToggleSafe();
+        Konsole.run(new ToggleSafe(), 500,500);
     }
 }
