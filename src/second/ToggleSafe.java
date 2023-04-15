@@ -3,27 +3,30 @@ package second;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Ein GUI-Programm auf Grundlage des Programmes Safe. Hierbei muss über die Eingabe durch Buttons die richtige Zahlen-
+ * Ein GUI-Programm auf Grundlage des Programmes DrehSafe. Hierbei muss über die Eingabe durch Buttons die richtige Zahlen-
  * kombination erraten werden, um das Programm erfolgreich (Exit Code 0) zu beenden. Wobei die Farbe des Hintergrunds
  * bzw. der Buttons grün ist, solange der User sich auf dem richtigen Pfad befindet und rot wird, wenn der User eine
- * Fehleingabe tätigt. (Vgl. Zustandsautomaten).
- * In dieser Version sind die Zahlen im Kreis angeordnet und rotieren im Uhrzeigersinn im Sekundentakt. Solange sich
- * der User auf dem richtigen Pfad befindet, sind die JButtons grün, bei einer Fehleingabe werden sie rot und zusätzlich
- * ändert sich die Drehrichtung.
+ * Fehleingabe tätigt. (Vgl. Zustandsautomaten). Außerdem sind die Zahlen im Kreis angeordnet und rotieren im Uhrzeigersinn
+ * im Sekundentakt. Solange sich der User auf dem richtigen Pfad befindet, sind die JButtons grün, bei einer Fehleingabe
+ * werden sie rot und zusätzlich ändert sich die Drehrichtung.
+ * In dieser Version öffnet sich zudem bei jeder Falscheingabe ein weiterer Safe und die Geschwindigkeit des betref-
+ * fenden Safes wird um 33% erhöht.
  *
  * @author Jan Obernberger
- * @version 42, 07.04.23
+ * @version ++42, 15.04.23
  */
-public class ToggleSafe extends JFrame implements ActionListener {
+public class ToggleSafe extends JFrame implements ActionListener{
     private int state = 0;
     private boolean direction = true;
     private final JButton[] buttons = new JButton[10];
     private long sleeptime = 1000;
-    Timer timer = null;
+    private Timer timer = null;
+    static final ArrayList<ToggleSafe> TOGGLE_SAFES = new ArrayList<>();
 
     ToggleSafe() { // Konstruktor
         setTitle("DrehSafe");
@@ -50,7 +53,7 @@ public class ToggleSafe extends JFrame implements ActionListener {
         setSize(300, 200);
         setLocation(300, 300);
         setVisible(true);
-        generateTimerTask(1);
+        generateTimerTask(1000);
         //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
     }
 private void generateTimerTask(int delay){
@@ -72,12 +75,10 @@ private void generateTimerTask(int delay){
 
     /**
      * Implementierung des ActionListener-Interface
-     * Zustandsautomat zur Zahlenfolge 8-2-2-4-7-2-5-3-0-1 realisiert mit Swicht-Case Anweisung. Bei falschem Raten wird
-     * hier zusätzlich die Drehrichtung über einen Boolean geändert.
+     * Zustandsautomat zur Zahlenfolge 8-5-2-9-6-3-0-7-4-1 realisiert mit Switch-Case Anweisung.
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("test");
         switch (Integer.parseInt(evt.getActionCommand())) {
             case 0 -> state = (state == 6) ? state + 1 : 0;
             case 1 -> state = (state == 9) ? state + 1 : 0;
@@ -97,12 +98,18 @@ private void generateTimerTask(int delay){
             direction = !direction;
             sleeptime *= 2.0 /3;
             System.out.println(sleeptime);
+            TOGGLE_SAFES.add(new ToggleSafe());
+            System.out.println(TOGGLE_SAFES.size());
            generateTimerTask(0);
         } else {
             col = Color.green;
+
         }
-        if (state == 10) {
-            System.exit(0);
+        if (state == 1) {
+            if(TOGGLE_SAFES.size()==1) {
+                System.exit(0);
+            }
+            dispose();
         }
         for (JButton b : buttons) b.setBackground(col);
     }
