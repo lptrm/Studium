@@ -4,7 +4,6 @@ import second.Konsole;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class GUITest extends JFrame {
@@ -89,11 +88,5 @@ public class GUITest extends JFrame {
         MaXxTupel(Fraction fraction){
             value = fraction;
         }
-    }
-    public static void main(String[] args) {
-        Spielfigur[] figurs = {new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
-        Spielfeld spielfeld = new Spielfeld(figurs);
-        GUITest guiTest = new GUITest(spielfeld);
-
     }
 }
