@@ -51,6 +51,7 @@ public class ToggleSafe extends JFrame implements ActionListener {
         c.add(buttons[5]);
         generateTimerTask(1000);
         //Parameter Delay setzt Verzögerung, mit der die Rotation beginnt. in ms
+        Konsole.run(this, 500, 500);
     }
 
     private void generateTimerTask(int delay) {
@@ -113,6 +114,6 @@ public class ToggleSafe extends JFrame implements ActionListener {
      * Main Methode zum Testen des Programms
      */
     public static void main(String[] args) {
-        Konsole.run(new ToggleSafe(), 500,500);
+        new ToggleSafe();
     }
 }
