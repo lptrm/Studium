@@ -10,9 +10,6 @@ public class MaXx {
         Spielfeld spielfeld = new Spielfeld(p);
         Visualisierung visualisierung = new Visualisierung();
         Controller controller = new Controller(spielfeld, visualisierung);
-        while (!controller.isEnd()) {
-            controller.zug();
-        }
-        controller.setEnd();
+
     }
 }

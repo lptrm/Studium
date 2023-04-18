@@ -4,6 +4,7 @@ package MaXxWithGUI;
  * @author Jan Obernberger
  * @version X, 11.01.2023
  **/
+import javax.swing.*;
 import java.math.BigInteger;
 
 public class Controller {
@@ -11,6 +12,9 @@ public class Controller {
      * Steuerflags
      */
     private boolean menu, end, eingabe, player, recWat;
+
+ GUITest guiTest;
+
     private int playerIndex;
     private final Spielfeld spielfeld;
     private Spielfigur winner;
@@ -30,6 +34,13 @@ public class Controller {
         this.spielfigur = spielfeld.getF();
         visualisierung.init(spielfeld);
         HMI.begin();
+        guiTest = new GUITest(spielfeld);
+        for (var v : guiTest.buttons){
+         v.addActionListener(e -> {
+             zug(e.getActionCommand());
+             System.out.println(e.getActionCommand());
+         });
+        }
     }
 
     /**
@@ -38,7 +49,7 @@ public class Controller {
      * aktuellen Spielverlauf in der Instanz des Spielfeldes bzw. der Spielfiguren (durch Referenzen aneinander gebunden)
      */
 
-    public void zug() {
+    public void zug(String command) {
         playerIndex = player ? 0 : 1;
         if (eingabe) {
             HMI.print(visualisierung.toString());
@@ -49,7 +60,7 @@ public class Controller {
                     HMI.showResults(f.getSign(), f.getPunkte().toString(), f.getPunkte().doubleValue());
             }
         }
-        String s2 = HMI.askDirection(spielfigur[playerIndex].getSign());
+        String s2 = command;
         eingabe = false;
         for (Richtung r : spielfigur[playerIndex].getDir()) {
             if (r.getShrt().equalsIgnoreCase(s2)) {
@@ -74,6 +85,8 @@ public class Controller {
             } else {
                 moveFigure(spielfigur[playerIndex], richtung);
                 visualisierung.update(spielfeld);
+                System.out.println(visualisierung);
+                guiTest.update();
             }
 
         } else if (s2.equalsIgnoreCase("menu")) {
@@ -86,7 +99,7 @@ public class Controller {
         }
         if (!eingabe) {
             HMI.fehleingabe();
-            zug();
+            //zug();
         }
     }
 
@@ -100,7 +113,7 @@ public class Controller {
                     recWat = true;
                     menu = false;
                     HMI.resume(spielfigur[playerIndex].getSign(), visualisierung.toString());
-                    zug();
+                    //zug();
                 }
                 case "exit" -> {
                     end = true;
