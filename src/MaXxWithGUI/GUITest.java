@@ -8,10 +8,20 @@ import java.util.ArrayList;
 
 public class GUITest extends JFrame {
     ArrayList<JPanel> rowPanels = new ArrayList<>();
+
+    Spielfeld spielfeld;
+    Container cp;
     GUITest(Spielfeld spielfeld){
-        Container cp = getContentPane();
+        this.spielfeld = spielfeld;
+        cp = getContentPane();
         cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 
+        drawField();
+        drawFigures();
+
+
+    }
+    private void drawField(){
         for (Fraction[] e : spielfeld.getFeld()){
             JPanel panel = new JPanel();
             cp.add(panel);
@@ -19,18 +29,20 @@ public class GUITest extends JFrame {
 
             rowPanels.add(panel);
             for(Fraction f : e){
-            JTextField target = new JTextField("" + f);
+                JTextField target = new JTextField("" + f);
+                target.setPreferredSize(new Dimension(50, 50));
 
-            panel.add(target);
+                panel.add(target);
             }
         }
+    }
+    private void drawFigures(){
         for(var v : spielfeld.getF()){
             int x = v.getSpalte();
             int y = v.getZeile();
             JTextField player = (JTextField) rowPanels.get(y).getComponent(x);
             player.setText(v.getSign());
         }
-
     }
 
     public static void main(String[] args) {
