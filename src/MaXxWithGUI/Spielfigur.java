@@ -1,4 +1,5 @@
 package MaXxWithGUI;
+
 /**
  * @author Jan Obernberger
  * @version X, 11.01.2023

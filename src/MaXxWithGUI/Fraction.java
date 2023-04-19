@@ -1,7 +1,7 @@
 package MaXxWithGUI;
 /**
- * @version 42, 24.03.2023
- * @author Jan Obernberger
+ * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
+ * @version 4.20, 19.04.2023
  **/
 
 import java.math.BigInteger;

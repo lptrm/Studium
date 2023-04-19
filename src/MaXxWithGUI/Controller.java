@@ -1,12 +1,9 @@
 package MaXxWithGUI;
 
 /**
- * @author Jan Obernberger
- * @version X, 11.01.2023
+ * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
+ * @version 4.20, 19.04.2023
  **/
-
-import java.math.BigInteger;
-
 public class Controller {
     /**
      * Steuerflags
@@ -33,19 +30,20 @@ public class Controller {
         this.winner = null;
         this.spielfigur = spielfeld.getF();
         guiTest = new GUITest(spielfeld);
-        for (var v : guiTest.panelIO.buttons){
-         v.addActionListener(e -> {
-             action(e.getActionCommand());
-             System.out.println(e.getActionCommand());
-         });
+        for (var v : guiTest.panelIO.buttons) {
+            v.addActionListener(e -> {
+                action(e.getActionCommand());
+                System.out.println(e.getActionCommand());
+            });
         }
     }
-    private void action(String command){
+
+    private void action(String command) {
         String turn = "NOSW";
-        if (turn.contains(command)){
+        if (turn.contains(command)) {
             zug(command);
         }
-        if (command.equals("Menü")){
+        if (command.equals("Menü")) {
             menuCall();
         }
         if (command.equals("Exit")) {
@@ -53,14 +51,16 @@ public class Controller {
         }
 
     }
+
     //Schnittstelle für ILLE
-    private Double[] getPoints(){
+    private Double[] getPoints() {
         int i = 0;
-        for(var v : spielfigur){
+        for (var v : spielfigur) {
             points[i++] = v.getPunkte().doubleValue();
         }
         return points;
     }
+
     /**
      * Methode, welche die zwei Spielfiguren abwechselnd mit dem Spielfeld interagierend lässt (siehe Aufga-
      * benstellung von Herrn Heinz im Wintersemester 2022 Einleitung 9 Spiel "MaXx". Als void, da Informationen zum
@@ -116,6 +116,7 @@ public class Controller {
         }
         return end;
     }
+
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
         spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
         spielfigur.setSpalte(spielfigur.getSpalte() + richtung.getSpalte());

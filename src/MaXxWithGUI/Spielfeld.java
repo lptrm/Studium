@@ -1,12 +1,13 @@
 package MaXxWithGUI;
-/**
- * @version X, 11.01.2023
- * @author Jan Obernberger
- **/
+
 
 import java.math.BigInteger;
 import java.util.Random;
 
+/**
+ * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
+ * @version 4.20, 19.04.2023
+ **/
 public class Spielfeld {
     private final int zeilen = 8;
     private final int spalten = 8;

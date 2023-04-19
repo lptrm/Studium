@@ -1,7 +1,8 @@
 package MaXxWithGUI;
+
 /**
- * @author Jan Obernberger
- * @version X, 11.01.2023
+ * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
+ * @version 4.20, 19.04.2023
  **/
 public enum Figur {
     Schwarz("B"), Weiss("W");
