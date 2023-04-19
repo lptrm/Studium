@@ -37,12 +37,21 @@ public class Controller {
         guiTest = new GUITest(spielfeld);
         for (var v : guiTest.buttons){
          v.addActionListener(e -> {
-             zug(e.getActionCommand());
+             action(e.getActionCommand());
              System.out.println(e.getActionCommand());
          });
         }
     }
+    private void action(String command){
+        String turn = "NOSW";
+        if (turn.contains(command)){
+            zug(command);
+        }
+        if (command.equals("Menü")){
 
+        }
+
+    }
     /**
      * Methode, welche die zwei Spielfiguren abwechselnd mit dem Spielfeld interagierend lässt (siehe Aufga-
      * benstellung von Herrn Heinz im Wintersemester 2022 Einleitung 9 Spiel "MaXx". Als void, da Informationen zum
