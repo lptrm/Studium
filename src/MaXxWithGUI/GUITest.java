@@ -10,8 +10,9 @@ public class GUITest extends JFrame {
     ArrayList<JPanel> rowPanels = new ArrayList<>();
     ArrayList<PlayGroundPanel> allFields = new ArrayList<>();
     //Eigene Dateien erstellen
-    IOPanel panelIO = new IOPanel();
-    StatusPanel status = new StatusPanel();
+    IOPanel ioPanel = new IOPanel();
+    StatusPanel statusPanel = new StatusPanel();
+    StartPanel startPanel = new StartPanel();
 
 
 
@@ -33,16 +34,16 @@ public class GUITest extends JFrame {
 
     }
     private void attachIOpanel(){
-        for(var v : panelIO.buttons){
-            panelIO.add(v);
+        for(var v : ioPanel.buttons){
+            ioPanel.add(v);
         }
-        cp.add(panelIO);
+        cp.add(ioPanel);
     }
     private void attachStatus(){
-        cp.add(status);
+        cp.add(statusPanel);
         JLabel test = new JLabel("Progress Bar, ILLE was los, mach mal");
         test.setMaximumSize(new Dimension(1000,100));
-        status.add(test);
+        statusPanel.add(test);
     }
     private void drawField(){
         for (Fraction[] e : spielfeld.getFeld()){

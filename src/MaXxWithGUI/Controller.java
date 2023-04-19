@@ -28,7 +28,7 @@ public class Controller {
         this.winner = null;
         this.spielfigur = spielfeld.getF();
         guiTest = new GUITest(spielfeld);
-        for (var v : guiTest.panelIO.buttons) {
+        for (var v : guiTest.ioPanel.buttons) {
             v.addActionListener(e -> {
                 action(e.getActionCommand());
                 System.out.println(e.getActionCommand());
