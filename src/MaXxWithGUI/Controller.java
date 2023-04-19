@@ -4,7 +4,7 @@ package MaXxWithGUI;
  * @author Jan Obernberger
  * @version X, 11.01.2023
  **/
-import javax.swing.*;
+
 import java.math.BigInteger;
 
 public class Controller {
@@ -13,7 +13,7 @@ public class Controller {
      */
     private boolean menu, end, eingabe, player, recWat;
 
- GUITest guiTest;
+    private GUITest guiTest;
 
     private int playerIndex;
     private final Spielfeld spielfeld;
@@ -35,7 +35,7 @@ public class Controller {
         visualisierung.init(spielfeld);
         HMI.begin();
         guiTest = new GUITest(spielfeld);
-        for (var v : guiTest.buttons){
+        for (var v : guiTest.panelIO.buttons){
          v.addActionListener(e -> {
              action(e.getActionCommand());
              System.out.println(e.getActionCommand());
@@ -49,6 +49,9 @@ public class Controller {
         }
         if (command.equals("Menü")){
 
+        }
+        if (command.equals("Exit")) {
+            System.exit(0);
         }
 
     }
