@@ -5,7 +5,10 @@ import second.Konsole;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
+/**
+ * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
+ * @version 4.20, 19.04.2023
+ **/
 public class GUITest extends JFrame {
     ArrayList<JPanel> rowPanels = new ArrayList<>();
     ArrayList<PlayGroundPanel> allFields = new ArrayList<>();
