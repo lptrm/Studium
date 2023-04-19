@@ -19,9 +19,10 @@ public class Controller {
     private final Spielfeld spielfeld;
     private Spielfigur winner;
     private final Spielfigur[] spielfigur;
-    private final Visualisierung visualisierung;
 
-    public Controller(Spielfeld spielfeld, Visualisierung visualisierung) {
+    private final Double[] points = new Double[2];
+
+    public Controller(Spielfeld spielfeld) {
         this.menu = false;
         this.end = false;
         this.eingabe = true;
@@ -29,11 +30,8 @@ public class Controller {
         this.recWat = true;
         this.playerIndex = 0;
         this.spielfeld = spielfeld;
-        this.visualisierung = visualisierung;
         this.winner = null;
         this.spielfigur = spielfeld.getF();
-        visualisierung.init(spielfeld);
-        HMI.begin();
         guiTest = new GUITest(spielfeld);
         for (var v : guiTest.panelIO.buttons){
          v.addActionListener(e -> {
@@ -48,12 +46,20 @@ public class Controller {
             zug(command);
         }
         if (command.equals("Menü")){
-
+            menuCall();
         }
         if (command.equals("Exit")) {
             System.exit(0);
         }
 
+    }
+    //Schnittstelle für ILLE
+    private Double[] getPoints(){
+        int i = 0;
+        for(var v : spielfigur){
+            points[i++] = v.getPunkte().doubleValue();
+        }
+        return points;
     }
     /**
      * Methode, welche die zwei Spielfiguren abwechselnd mit dem Spielfeld interagierend lässt (siehe Aufga-
@@ -63,25 +69,7 @@ public class Controller {
 
     public void zug(String command) {
         playerIndex = player ? 0 : 1;
-        if (eingabe) {
-            HMI.print(visualisierung.toString());
-            for (Spielfigur f : spielfigur) {
-                Fraction points = f.getPunkte();
-                if (!points.getNumerator().equals(BigInteger.ZERO) && !points.getDenominator().equals(BigInteger.ZERO))
-                    //Anzeige des Punktestands des Spielers nur, wenn Punkte > 0!
-                    HMI.showResults(f.getSign(), f.getPunkte().toString(), f.getPunkte().doubleValue());
-            }
-        }
         String s2 = command;
-        eingabe = false;
-        for (Richtung r : spielfigur[playerIndex].getDir()) {
-            if (r.getShrt().equalsIgnoreCase(s2)) {
-                //Eingabe wird true, wenn der eingegebene String mit einer legitimen Richtung der Spielfigur des
-                //spieler übereinstimmt
-                eingabe = true;
-                break;
-            }
-        }
         if (eingabe) {
             Richtung richtung = switch (s2.toUpperCase()) {
                 case "N" -> Richtung.Nord;
@@ -96,47 +84,18 @@ public class Controller {
                 eingabe = false;
             } else {
                 moveFigure(spielfigur[playerIndex], richtung);
-                visualisierung.update(spielfeld);
-                System.out.println(visualisierung);
+                System.out.println(spielfeld);
                 guiTest.update();
-            }
-
-        } else if (s2.equalsIgnoreCase("menu")) {
-            menuCall();
-            if (recWat || end) {
-                recWat = !recWat;
-                return;
             }
 
         }
         if (!eingabe) {
-            HMI.fehleingabe();
-            //zug();
+            System.out.println("Fehleingabe");
         }
     }
 
     private void menuCall() {
-        menu = true;
-        HMI.menuEntry();
-        while (menu) {
-            String s3 = HMI.read();
-            switch (s3.toLowerCase()) {
-                case "resume" -> {
-                    recWat = true;
-                    menu = false;
-                    HMI.resume(spielfigur[playerIndex].getSign(), visualisierung.toString());
-                    //zug();
-                }
-                case "exit" -> {
-                    end = true;
-                    recWat = true;
-                    return;
-
-                }
-                default -> HMI.fehleingabe();
-            }
-
-        }
+        System.out.println("Gratulation, Sie sind im Menü");
     }
 
     public boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
@@ -157,14 +116,6 @@ public class Controller {
         }
         return end;
     }
-
-    public void setEnd() {
-        if (!menu) {
-            HMI.print(visualisierung.toString());
-            HMI.end(winner);
-        }
-    }
-
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
         spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
         spielfigur.setSpalte(spielfigur.getSpalte() + richtung.getSpalte());
