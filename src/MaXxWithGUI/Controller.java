@@ -8,9 +8,9 @@ public class Controller {
     /**
      * Steuerflags
      */
-    private boolean menu, end, eingabe, player, recWat;
+    private boolean end, eingabe, player;
 
-    private GUITest guiTest;
+    private final GUITest guiTest;
 
     private int playerIndex;
     private final Spielfeld spielfeld;
@@ -20,11 +20,9 @@ public class Controller {
     private final Double[] points = new Double[2];
 
     public Controller(Spielfeld spielfeld) {
-        this.menu = false;
         this.end = false;
         this.eingabe = true;
         this.player = true;
-        this.recWat = true;
         this.playerIndex = 0;
         this.spielfeld = spielfeld;
         this.winner = null;
@@ -61,12 +59,6 @@ public class Controller {
         return points;
     }
 
-    /**
-     * Methode, welche die zwei Spielfiguren abwechselnd mit dem Spielfeld interagierend lässt (siehe Aufga-
-     * benstellung von Herrn Heinz im Wintersemester 2022 Einleitung 9 Spiel "MaXx". Als void, da Informationen zum
-     * aktuellen Spielverlauf in der Instanz des Spielfeldes bzw. der Spielfiguren (durch Referenzen aneinander gebunden)
-     */
-
     public void zug(String command) {
         playerIndex = player ? 0 : 1;
         String s2 = command;
@@ -86,6 +78,7 @@ public class Controller {
                 moveFigure(spielfigur[playerIndex], richtung);
                 System.out.println(spielfeld);
                 guiTest.update();
+                if(isEnd()) System.exit(0);
             }
 
         }
@@ -110,6 +103,7 @@ public class Controller {
                 end = spielfigur.getPunkte().doubleValue() >= 53;
                 if (end) {
                     winner = spielfigur;
+                    System.out.println(winner);
                     break;
                 }
             }
