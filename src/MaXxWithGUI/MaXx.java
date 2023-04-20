@@ -6,8 +6,6 @@ package MaXxWithGUI;
  **/
 public class MaXx {
     public static void main(String[] args) {
-        Spielfigur[] p = {new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
-        Spielfeld spielfeld = new Spielfeld(p);
-        new Controller(spielfeld);
+        new Controller();
     }
 }

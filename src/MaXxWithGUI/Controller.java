@@ -5,28 +5,34 @@ package MaXxWithGUI;
  * @version 4.20, 19.04.2023
  **/
 public class Controller {
-    /**
-     * Steuerflags
-     */
-    private boolean end, eingabe, player;
+    //Objekte, welche bereits vorher initialisiert werden (Default Objekte)
+    private boolean eingabe = false;
 
-    private final GUITest guiTest;
 
-    private int playerIndex;
-    private final Spielfeld spielfeld;
-    private Spielfigur winner;
-    private final Spielfigur[] spielfigur;
+    private int playerIndex = 0;
+
+    private Spielfigur winner = null;
+    private static final int END = 53;
+
 
     private final Double[] points = new Double[2];
+    //Objekte werden im Konstruktor erzeugt
+    private final GUITest guiTest;
+    private final Spielfeld spielfeld;
+    private final Spielfigur[] spielfigur;
 
-    public Controller(Spielfeld spielfeld) {
-        this.end = false;
-        this.eingabe = true;
-        this.player = true;
-        this.playerIndex = 0;
-        this.spielfeld = spielfeld;
-        this.winner = null;
-        this.spielfigur = spielfeld.getF();
+    /**
+     * Konstruktor
+     * Zwei Spielfiguren-Objekte werden erzeugt und in der Instanzvariable spielfeld gespeichert
+     * ein Spielfeld-Objekt wird erzeugt und in der Instanzvariable spielfeld gespeichert
+     * ein GUITest-Objekt wird erzeugt und in der Instanzvariable guiTest gespeichert
+     * anschließend werden die Action-Listener der Buttons des IO-Panels mit der Schnittstelle des Controllers action()
+     * verknüpft
+     */
+
+    public Controller() {
+        spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
+        spielfeld = new Spielfeld(spielfigur);
         guiTest = new GUITest(spielfeld);
         for (var v : guiTest.ioPanel.buttons) {
             v.addActionListener(e -> {
@@ -36,6 +42,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Schnittstelle für Eingabefunktionen der GUI
+     * TODO: menuCall() konzipieren. Ist dies überhaupt notwendig?
+     *
+     * @param command: Strings, welche in den Actionevents enthalten sind
+     */
     private void action(String command) {
         String turn = "NOSW";
         if (turn.contains(command)) {
@@ -50,7 +62,11 @@ public class Controller {
 
     }
 
-    //Schnittstelle für ILLE
+    /**
+     * Schnittstelle für Ausgabe des Punktestandes in der GUI
+     *
+     * @return : Double-Array, wobei Elem. 0 die Punkte von Weiß und Elem. 1 die Punkte von Schwarz repräsentiert
+     */
     public Double[] getPoints() {
         int i = 0;
         for (var v : spielfigur) {
@@ -59,65 +75,84 @@ public class Controller {
         return points;
     }
 
+    /**
+     * Bei Eingabe einer Zugrichtung wird diese Funktion aufgerufen
+     * wenn keine Fehleingabe vorliegt, wird der Spieler gewechselt und die Zugrichtung interpretiert
+     * isLegit() überprüft, ob die Zugrichtung für den Spieler valide ist, befände er sich außerhalb des Spielfeldes,
+     * so wird eine Fehleingabe erkannt
+     * anschließend wird die Spielfigur mit der Methode moveFigure() bewegt und die Schnittstelle der GUI update()
+     * gerufen
+     *
+     * @param command : Eingabestring, enthalten im Wort "NOSW"
+     */
     public void zug(String command) {
-        playerIndex = player ? 0 : 1;
-        String s2 = command;
+        //Spieler wird aus eine Array ausgewählt; wenn keine Fehleingabe erfolgt ist, wird der Spieler gewechselt.
+        if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;
+        Richtung richtung = switch (command.toUpperCase()) {
+            case "N" -> Richtung.Nord;
+            case "O" -> Richtung.Ost;
+            case "S" -> Richtung.Sued;
+            case "W" -> Richtung.West;
+            case "NO" -> Richtung.Nordost;
+            case "SW" -> Richtung.Suedwest;
+            default -> throw new IllegalStateException("Unexpected value: " + command);
+        };
+        eingabe = isLegit(richtung, spielfigur[playerIndex]);
         if (eingabe) {
-            Richtung richtung = switch (s2.toUpperCase()) {
-                case "N" -> Richtung.Nord;
-                case "O" -> Richtung.Ost;
-                case "S" -> Richtung.Sued;
-                case "W" -> Richtung.West;
-                case "NO" -> Richtung.Nordost;
-                case "SW" -> Richtung.Suedwest;
-                default -> throw new IllegalStateException("Unexpected value: " + s2);
-            };
-            if (!isLegit(richtung, spielfigur[playerIndex])) {
-                eingabe = false;
-            } else {
-                moveFigure(spielfigur[playerIndex], richtung);
-                System.out.println(spielfeld);
-                guiTest.update();
-                if(isEnd()) System.exit(0);
-            }
-
-        }
-        if (!eingabe) {
+            moveFigure(spielfigur[playerIndex], richtung);
+            System.out.println(spielfeld);
+            guiTest.update();
+        } else {
             System.out.println("Fehleingabe");
         }
     }
 
+    /**
+     * TODO: implementer oder streichen
+     */
     private void menuCall() {
         System.out.println("Gratulation, Sie sind im Menü");
     }
 
+    /**
+     * Validiert den gewünschten Zug des Spielers
+     *
+     * @param richtung   : wird aus Eingabe ermittelt, gewünschte Zugrichtung des Nutzers
+     * @param spielfigur : Spielfigur, welche den Zug ausführen möchte
+     * @return : wahr, wenn die neue Position innerhalb der Spielfeldgrenzen ist
+     * falsch, wenn die neue Position außerhalb der Spielfeldgrenzen ist
+     */
     public boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
         int spalteMax = richtung.getSpalte() + spielfigur.getSpalte();
         int zeileMax = richtung.getZeile() + spielfigur.getZeile();
         return spalteMax >= 0 && spalteMax <= 7 && zeileMax >= 0 && zeileMax <= 7;
     }
 
-    public boolean isEnd() {
-        if (!end) {
-            for (Spielfigur spielfigur : spielfeld.getF()) {
-                end = spielfigur.getPunkte().doubleValue() >= 53;
-                if (end) {
-                    winner = spielfigur;
-                    System.out.println(winner);
-                    break;
-                }
+    /**
+     * Wenn ein Spieler den zum gewinnen des Spiels notwendigen Punktestand der END Konstante erreicht hat, wird das
+     * der Gewinner gesetzt.
+     */
+    public void isEnd() {
+        for (Spielfigur spielfigur : spielfeld.getF()) {
+            if (spielfigur.getPunkte().doubleValue() >= END) {
+                winner = spielfigur;
+                System.out.println(winner);
+                System.exit(0);
             }
         }
-        return end;
     }
 
+    /**
+     *
+     * @param spielfigur
+     * @param richtung
+     */
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
         spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
         spielfigur.setSpalte(spielfigur.getSpalte() + richtung.getSpalte());
         spielfigur.setPunkte(spielfeld.getValue(spielfigur.getZeile(), spielfigur.getSpalte()));
         spielfeld.setValue(spielfigur.getZeile(), spielfigur.getSpalte());
         isEnd();
-        player = !player;
 
     }
 }
