@@ -5,13 +5,15 @@ import second.Konsole;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
 public class GUITest extends JFrame {
-    ArrayList<JPanel> rowPanels = new ArrayList<>();
-    ArrayList<PlayGroundPanel> allFields = new ArrayList<>();
+    ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
     IOPanel ioPanel = new IOPanel();
     StatusPanel statusPanel = new StatusPanel();
@@ -49,15 +51,19 @@ public class GUITest extends JFrame {
         statusPanel.add(test);
     }
     private void drawField(){
+        JPanel panel = new JPanel();
+        cp.add(panel);
+        panel.setLayout(new GridLayout(8,8));
         for (Fraction[] e : spielfeld.getFeld()){
-            JPanel panel = new JPanel();
-            cp.add(panel);
-            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-            rowPanels.add(panel);
+            ArrayList<PlayGroundPanel> list = new ArrayList<>();
+
+            allFieldsRows.add(list);
             for(Fraction f : e){
+
                 PlayGroundPanel targetB = new PlayGroundPanel(f);
-                allFields.add(targetB);
+
+                list.add(targetB);
                 panel.add(targetB);
             }
         }
@@ -67,7 +73,7 @@ public class GUITest extends JFrame {
         for(var v : spielfeld.getF()){
             int x = v.getSpalte();
             int y = v.getZeile();
-            PlayGroundPanel player = (PlayGroundPanel) rowPanels.get(y).getComponent(x);
+            PlayGroundPanel player = allFieldsRows.get(y).get(x);
             player.value = Fraction.NaN;
             player.text = v.getSign();
             player.occupied = true;
@@ -75,7 +81,7 @@ public class GUITest extends JFrame {
         }
     }
     public void update(){
-        allFields.forEach(e -> e.occupied=false);
+        allFieldsRows.forEach(row -> row.forEach( column -> column.occupied = false));
 
         repaint();
 
