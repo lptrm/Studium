@@ -33,6 +33,7 @@ public class Controller {
         for (var v : guiTest.ioPanel.buttons) {
             v.addActionListener(e -> {
                 action(e.getActionCommand());
+                //For Debug
                 System.out.println(e.getActionCommand());
             });
         }
@@ -72,7 +73,7 @@ public class Controller {
     }
 
     /**
-     * Bei Eingabe einer Zugrichtung wird diese Funktion aufgerufen
+     * Bei Eingabe einer Zugrichtung wird diese Funktion aufgerufen,
      * wenn keine Fehleingabe vorliegt, wird der Spieler gewechselt und die Zugrichtung interpretiert
      * isLegit() überprüft, ob die Zugrichtung für den Spieler valide ist, befände er sich außerhalb des Spielfeldes,
      * so wird eine Fehleingabe erkannt
@@ -82,7 +83,6 @@ public class Controller {
      * @param command : Eingabestring, enthalten im Wort "NOSW"
      */
     public void zug(String command) {
-        //Spieler wird aus eine Array ausgewählt; wenn keine Fehleingabe erfolgt ist, wird der Spieler gewechselt.
         if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;
         Richtung richtung = switch (command.toUpperCase()) {
             case "N" -> Richtung.Nord;
@@ -96,6 +96,7 @@ public class Controller {
         eingabe = isLegit(richtung, spielfigur[playerIndex]);
         if (eingabe) {
             moveFigure(spielfigur[playerIndex], richtung);
+            //For Debug
             System.out.println(spielfeld);
             guiTest.update();
         } else {
