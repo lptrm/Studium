@@ -13,6 +13,7 @@ import java.util.Set;
  * @version 4.20, 19.04.2023
  **/
 public class GUITest extends JFrame {
+    //Matrix Array List als Datenstruktur für die Spielfeldpanele
     ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
     IOPanel ioPanel = new IOPanel();
