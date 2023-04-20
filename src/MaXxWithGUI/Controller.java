@@ -51,7 +51,7 @@ public class Controller {
     }
 
     //Schnittstelle für ILLE
-    private Double[] getPoints() {
+    public Double[] getPoints() {
         int i = 0;
         for (var v : spielfigur) {
             points[i++] = v.getPunkte().doubleValue();
