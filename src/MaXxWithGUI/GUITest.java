@@ -23,8 +23,8 @@ public class GUITest extends JFrame {
 
 
 
-    Spielfeld spielfeld;
-    Container container = getContentPane();
+    private final Spielfeld spielfeld;
+    private final Container container = getContentPane();
 
     /**
      * Standardkonstruktor
