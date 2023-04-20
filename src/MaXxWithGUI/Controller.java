@@ -5,22 +5,20 @@ package MaXxWithGUI;
  * @version 4.20, 19.04.2023
  **/
 public class Controller {
-    //Objekte, welche bereits vorher initialisiert werden (Default Objekte)
+    //Objekte, welche bereits vorher initialisiert, werden (Default Objekte)
     private boolean eingabe = false;
 
 
     private int playerIndex = 0;
 
-    private Spielfigur winner = null;
     private static final int END = 53;
 
 
     private final Double[] points = new Double[2];
-    //Objekte werden im Konstruktor erzeugt
-    private final GUITest guiTest;
-    private final Spielfeld spielfeld;
-    private final Spielfigur[] spielfigur;
-
+    //Hier ggf. Reihenfolge beachte? TODO: testen
+    private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
+    private final Spielfeld spielfeld = new Spielfeld(spielfigur);
+    private final GUITest guiTest = new GUITest(spielfeld);
     /**
      * Konstruktor
      * Zwei Spielfiguren-Objekte werden erzeugt und in der Instanzvariable spielfeld gespeichert
@@ -31,9 +29,6 @@ public class Controller {
      */
 
     public Controller() {
-        spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
-        spielfeld = new Spielfeld(spielfigur);
-        guiTest = new GUITest(spielfeld);
         for (var v : guiTest.ioPanel.buttons) {
             v.addActionListener(e -> {
                 action(e.getActionCommand());
@@ -135,8 +130,7 @@ public class Controller {
     public void isEnd() {
         for (Spielfigur spielfigur : spielfeld.getF()) {
             if (spielfigur.getPunkte().doubleValue() >= END) {
-                winner = spielfigur;
-                System.out.println(winner);
+                System.out.println(spielfigur);
                 System.exit(0);
             }
         }
