@@ -70,11 +70,10 @@ public class GUITest extends JFrame {
         }
     }
     private void drawFigures(){
-        int i = 0;
         for(var v : spielfeld.getF()){
-            int x = v.getSpalte();
-            int y = v.getZeile();
-            PlayGroundPanel player = allFieldsRows.get(y).get(x);
+            int row = v.getSpalte();
+            int column = v.getZeile();
+            PlayGroundPanel player = allFieldsRows.get(column).get(row);
             player.value = Fraction.NaN;
             player.text = v.getSign();
             player.occupied = true;
