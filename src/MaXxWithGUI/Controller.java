@@ -30,7 +30,7 @@ public class Controller {
      */
 
     public Controller() {
-        for (var v : guiTest.ioPanel.buttons) {
+        for (var v : guiTest.getIoPanel().buttons) {
             v.addActionListener(e -> {
                 action(e.getActionCommand());
                 //For Debug

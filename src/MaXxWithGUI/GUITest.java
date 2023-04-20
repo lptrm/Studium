@@ -5,8 +5,6 @@ import second.Konsole;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 /**
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
@@ -14,19 +12,22 @@ import java.util.Set;
  **/
 public class GUITest extends JFrame {
     //Matrix Array List als Datenstruktur für die Spielfeldpanele
-    ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
+    private final ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
-    IOPanel ioPanel = new IOPanel();
-    StatusPanel statusPanel = new StatusPanel();
-    StartPanel startPanel = new StartPanel();
+    private final IOPanel ioPanel = new IOPanel();
+    private final StatusPanel statusPanel = new StatusPanel();
+
+
+
+    private final StartPanel startPanel = new StartPanel();
 
 
 
     Spielfeld spielfeld;
-    Container cp = getContentPane();
+    Container container = getContentPane();
     GUITest(Spielfeld spielfeld){
         this.spielfeld = spielfeld;
-        cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         attachStatus();
 
@@ -40,42 +41,42 @@ public class GUITest extends JFrame {
 
     }
     private void attachIOpanel(){
-        for(var v : ioPanel.buttons){
-            ioPanel.add(v);
+        for(var jButton : ioPanel.buttons){
+            ioPanel.add(jButton);
         }
-        cp.add(ioPanel);
+        container.add(ioPanel);
     }
     private void attachStatus(){
-        cp.add(statusPanel);
+        container.add(statusPanel);
         JLabel test = new JLabel("Progress Bar, ILLE was los, mach mal");
         test.setMaximumSize(new Dimension(1000,100));
         statusPanel.add(test);
     }
     private void drawField(){
         JPanel panel = new JPanel();
-        cp.add(panel);
+        container.add(panel);
         panel.setLayout(new GridLayout(8,8));
-        for (Fraction[] e : spielfeld.getFeld()){
+        for (Fraction[] fractions : spielfeld.getFeld()){
 
-            ArrayList<PlayGroundPanel> list = new ArrayList<>();
+            ArrayList<PlayGroundPanel> temporaryList = new ArrayList<>();
 
-            allFieldsRows.add(list);
-            for(Fraction f : e){
+            allFieldsRows.add(temporaryList);
+            for(Fraction fraction : fractions){
 
-                PlayGroundPanel targetB = new PlayGroundPanel(f);
+                PlayGroundPanel target = new PlayGroundPanel(fraction);
 
-                list.add(targetB);
-                panel.add(targetB);
+                temporaryList.add(target);
+                panel.add(target);
             }
         }
     }
     private void drawFigures(){
-        for(var v : spielfeld.getF()){
-            int row = v.getSpalte();
-            int column = v.getZeile();
+        for(var spielfigur : spielfeld.getF()){
+            int row = spielfigur.getSpalte();
+            int column = spielfigur.getZeile();
             PlayGroundPanel player = allFieldsRows.get(column).get(row);
             player.value = Fraction.NaN;
-            player.text = v.getSign();
+            player.text = spielfigur.getSign();
             player.occupied = true;
             player.repaint();
         }
@@ -87,5 +88,8 @@ public class GUITest extends JFrame {
 
 
         drawFigures();
+    }
+    public IOPanel getIoPanel() {
+        return ioPanel;
     }
 }
