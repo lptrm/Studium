@@ -14,7 +14,7 @@ public class GUITest extends JFrame {
     //Matrix Array List als Datenstruktur für die Spielfeldpanele
     private final ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
-    private final IOPanel ioPanel = new IOPanel();
+    private final OutputPanel outputPanel = new OutputPanel();
     private final StatusPanel statusPanel = new StatusPanel();
 
 
@@ -25,6 +25,18 @@ public class GUITest extends JFrame {
 
     Spielfeld spielfeld;
     Container container = getContentPane();
+
+    /**
+     * Standardkonstruktor
+     * Instanzvariable spielfeld wir mit anzuzeigendem Spielfeld initialisiert
+     * BoxLayout wird als Layoutmanager gesetzt
+     * die Statusleiste wird als erstes Element hinzugefügt
+     * die Felder werden hinzugefügt,
+     * das Eingabe panel wird hinzugefügt
+     * über die run() Methode des Hilfsprogramms Konsole wird der JFrame gestartet, als Parameter wir die gewünschte
+     * Startauflösung mitgegeben
+     * @param spielfeld : Schnittstelle zum MaXx Backend - Referenz auf Anzuzeigendes Spiel(-feld)
+     */
     GUITest(Spielfeld spielfeld){
         this.spielfeld = spielfeld;
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -32,7 +44,7 @@ public class GUITest extends JFrame {
         attachStatus();
 
 
-        drawField();
+        attachField();
         drawFigures();
 
         attachIOpanel();
@@ -40,19 +52,29 @@ public class GUITest extends JFrame {
         Konsole.run(this, 1000, 1000);
 
     }
+
+    /**
+     * TODO: add Description
+     */
     private void attachIOpanel(){
-        for(var jButton : ioPanel.buttons){
-            ioPanel.add(jButton);
+        for(var jButton : outputPanel.buttons){
+            outputPanel.add(jButton);
         }
-        container.add(ioPanel);
+        container.add(outputPanel);
     }
+    /**
+     * TODO: add Description
+     */
     private void attachStatus(){
         container.add(statusPanel);
         JLabel test = new JLabel("Progress Bar, ILLE was los, mach mal");
         test.setMaximumSize(new Dimension(1000,100));
         statusPanel.add(test);
     }
-    private void drawField(){
+    /**
+     * TODO: add Description
+     */
+    private void attachField(){
         JPanel panel = new JPanel();
         container.add(panel);
         panel.setLayout(new GridLayout(8,8));
@@ -70,6 +92,9 @@ public class GUITest extends JFrame {
             }
         }
     }
+    /**
+     * TODO: add Description
+     */
     private void drawFigures(){
         for(var spielfigur : spielfeld.getF()){
             int row = spielfigur.getSpalte();
@@ -81,6 +106,9 @@ public class GUITest extends JFrame {
             player.repaint();
         }
     }
+    /**
+     * TODO: add Description
+     */
     public void update(){
         allFieldsRows.forEach(row -> row.forEach( column -> column.occupied = false));
 
@@ -89,7 +117,7 @@ public class GUITest extends JFrame {
 
         drawFigures();
     }
-    public IOPanel getIoPanel() {
-        return ioPanel;
+    public OutputPanel getOutputPanel() {
+        return outputPanel;
     }
 }
