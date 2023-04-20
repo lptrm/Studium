@@ -82,7 +82,7 @@ public class Controller {
      *
      * @param command : Eingabestring, enthalten im Wort "NOSW"
      */
-    public void zug(String command) {
+    private void zug(String command) {
         if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;
         Richtung richtung = switch (command.toUpperCase()) {
             case "N" -> Richtung.Nord;
@@ -119,7 +119,7 @@ public class Controller {
      * @return : wahr, wenn die neue Position innerhalb der Spielfeldgrenzen ist
      * falsch, wenn die neue Position außerhalb der Spielfeldgrenzen ist
      */
-    public boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
+    private boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
         int spalteMax = richtung.getSpalte() + spielfigur.getSpalte();
         int zeileMax = richtung.getZeile() + spielfigur.getZeile();
         return spalteMax >= 0 && spalteMax <= 7 && zeileMax >= 0 && zeileMax <= 7;
@@ -129,7 +129,7 @@ public class Controller {
      * Wenn ein Spieler den zum gewinnen des Spiels notwendigen Punktestand der END Konstante erreicht hat, wird das
      * der Gewinner gesetzt.
      */
-    public void isEnd() {
+    private void isEnd() {
         for (Spielfigur spielfigur : spielfeld.getF()) {
             if (spielfigur.getPunkte().doubleValue() >= END) {
                 System.out.println(spielfigur);
