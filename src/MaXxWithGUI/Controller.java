@@ -19,6 +19,7 @@ public class Controller {
     private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
     private final Spielfeld spielfeld = new Spielfeld(spielfigur);
     private final GUITest guiTest = new GUITest(spielfeld);
+
     /**
      * Konstruktor
      * Zwei Spielfiguren-Objekte werden erzeugt und in der Instanzvariable spielfeld gespeichert
@@ -137,9 +138,11 @@ public class Controller {
     }
 
     /**
-     *
-     * @param spielfigur
-     * @param richtung
+     * Bewegt die Spielfigur des Spielers, der das Kommando gegeben hat in die gewünschte richtung und addiert den Wert
+     * des Feldes auf den Punktestand der Spielfigur
+     * Die Validierung des Zuges findet in der zug() Methode statt
+     * @param spielfigur : Spielfigur, die ziehen möchte
+     * @param richtung : Richtung, in die die Spielfigur ziehen möchte
      */
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
         spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
