@@ -25,23 +25,11 @@ public class Controller implements ActionListener {
 
     /**
      * Konstruktor
-     * Zwei Spielfiguren-Objekte werden erzeugt und in der Instanzvariable spielfeld gespeichert
-     * ein Spielfeld-Objekt wird erzeugt und in der Instanzvariable spielfeld gespeichert
-     * ein GUITest-Objekt wird erzeugt und in der Instanzvariable guiTest gespeichert
-     * anschließend werden die Action-Listener der Buttons des IO-Panels mit der Schnittstelle des Controllers action()
-     * verknüpft
      */
 
     public Controller() {
         guiTest = new GUITest(spielfeld, this);
     }
-
-    /**
-     * Schnittstelle für Eingabefunktionen der GUI
-     * TODO: menuCall() konzipieren. Ist dies überhaupt notwendig?
-     *
-     * @param command: Strings, welche in den Actionevents enthalten sind
-     */
 
     /**
      * Schnittstelle für Ausgabe des Punktestandes in der GUI
@@ -126,8 +114,9 @@ public class Controller implements ActionListener {
      * Bewegt die Spielfigur des Spielers, der das Kommando gegeben hat in die gewünschte richtung und addiert den Wert
      * des Feldes auf den Punktestand der Spielfigur
      * Die Validierung des Zuges findet in der zug() Methode statt
+     *
      * @param spielfigur : Spielfigur, die ziehen möchte
-     * @param richtung : Richtung, in die die Spielfigur ziehen möchte
+     * @param richtung   : Richtung, in die die Spielfigur ziehen möchte
      */
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
         spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
