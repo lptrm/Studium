@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
-public class GUITest extends JFrame {
+public class GUIManager extends JFrame {
     //Matrix Array List als Datenstruktur für die Spielfeldpanele
     private final ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
@@ -38,7 +38,7 @@ public class GUITest extends JFrame {
      * Startauflösung mitgegeben
      * @param spielfeld : Schnittstelle zum MaXx Backend - Referenz auf Anzuzeigendes Spiel(-feld)
      */
-    GUITest(Spielfeld spielfeld, Controller controller){
+    GUIManager(Spielfeld spielfeld, Controller controller){
         this.spielfeld = spielfeld;
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
@@ -55,7 +55,7 @@ public class GUITest extends JFrame {
 
     }
     private void attachListeners(ActionListener actionListener){
-        for (var v : outputPanel.buttons){
+        for (var v : outputPanel.getButtons()){
             v.addActionListener(actionListener);
         }
     }
@@ -63,7 +63,7 @@ public class GUITest extends JFrame {
      * TODO: add Description
      */
     private void attachIOpanel(){
-        for(var jButton : outputPanel.buttons){
+        for(var jButton : outputPanel.getButtons()){
             outputPanel.add(jButton);
         }
         container.add(outputPanel);
@@ -115,11 +115,20 @@ public class GUITest extends JFrame {
     /**
      * TODO: add Description
      */
-    public void update(){
+    private void drawAccessOptions(int playerIndex){
+
+    }
+    /**
+     * playerIndex = Schnittstelle für Anezeige der Zugmöglichkeiten
+     * TODO: add Description
+     */
+    public void update(int playerIndex){
         allFieldsRows.forEach(row -> row.forEach( column -> column.occupied = false));
 
 
         drawFigures();
+
+        drawAccessOptions(playerIndex);
 
         repaint();
     }

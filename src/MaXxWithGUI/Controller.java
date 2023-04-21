@@ -21,14 +21,14 @@ public class Controller implements ActionListener {
     //Hier ggf. Reihenfolge beachte? TODO: testen
     private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
     private final Spielfeld spielfeld = new Spielfeld(spielfigur);
-    private final GUITest guiTest;
+    private final GUIManager guiManager;
 
     /**
      * Konstruktor
      */
 
     public Controller() {
-        guiTest = new GUITest(spielfeld, this);
+        guiManager = new GUIManager(spielfeld, this);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Controller implements ActionListener {
             moveFigure(spielfigur[playerIndex], richtung);
             //For Debug
             System.out.println(spielfeld);
-            guiTest.update();
+            guiManager.update(playerIndex);
         } else {
             System.out.println("Fehleingabe");
         }
