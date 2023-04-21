@@ -34,8 +34,10 @@ public class MyPaint extends JFrame {
          */
         @Override
         public void paintComponent(Graphics g) {
-            this.setBackground(new Color(238, 238, 238));
+            //this.setBackground(new Color(238, 238, 238));
             super.paintComponent(g);
+            g.setColor(getBackground());
+            g.fillRect(0,0, getWidth(), getHeight());
             g.setColor(repCol);
             g.fillOval(0, 0, 150, 150);
 
@@ -70,7 +72,32 @@ public class MyPaint extends JFrame {
         info4.setText("To erase, hold right.");
         //clearing button configuration
         JButton button = new JButton("Clear Canvas");
-        button.addActionListener(e -> pixels.forEach(el -> el.setBackground(Color.white)));
+        ArrayList<Long> list = new ArrayList<>(2000000);
+/*
+        button.addActionListener(e -> {
+            long currentTime = System.nanoTime();
+            for (var v : pixels){
+                v.setBackground(Color.white);
+            }
+            long time2 = System.nanoTime() - currentTime;
+            list.add(time2);
+            System.out.println(list.stream().mapToDouble(a -> a).average());
+        });
+
+ */
+
+
+
+        button.addActionListener(e -> {
+            long currentTime = System.nanoTime();
+            pixels.forEach(el -> el.setBackground(Color.white));
+            long time2 = System.nanoTime() - currentTime;
+            list.add(time2);
+            System.out.println(list.stream().mapToDouble(a -> a).average());
+        });
+
+
+
         //setting scope's size
         preview.setPreferredSize(new Dimension(150, 150));
         //canvas configuration

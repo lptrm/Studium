@@ -1,10 +1,13 @@
 package MaXxWithGUI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
-public class Controller {
+public class Controller implements ActionListener {
     //Objekte, welche bereits vorher initialisiert, werden (Default Objekte)
     private boolean eingabe = false;
 
@@ -18,7 +21,7 @@ public class Controller {
     //Hier ggf. Reihenfolge beachte? TODO: testen
     private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
     private final Spielfeld spielfeld = new Spielfeld(spielfigur);
-    private final GUITest guiTest = new GUITest(spielfeld);
+    private final GUITest guiTest;
 
     /**
      * Konstruktor
@@ -30,13 +33,7 @@ public class Controller {
      */
 
     public Controller() {
-        for (var v : guiTest.getOutputPanel().buttons) {
-            v.addActionListener(e -> {
-                action(e.getActionCommand());
-                //For Debug
-                System.out.println(e.getActionCommand());
-            });
-        }
+        guiTest = new GUITest(spielfeld, this);
     }
 
     /**
@@ -45,19 +42,6 @@ public class Controller {
      *
      * @param command: Strings, welche in den Actionevents enthalten sind
      */
-    private void action(String command) {
-        String turn = "NOSW";
-        if (turn.contains(command)) {
-            zug(command);
-        }
-        if (command.equals("Menü")) {
-            menuCall();
-        }
-        if (command.equals("Exit")) {
-            System.exit(0);
-        }
-
-    }
 
     /**
      * Schnittstelle für Ausgabe des Punktestandes in der GUI
@@ -152,5 +136,25 @@ public class Controller {
         spielfeld.setValue(spielfigur.getZeile(), spielfigur.getSpalte());
         isEnd();
 
+    }
+
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String turn = "NOSW";
+        String command = e.getActionCommand();
+        if (turn.contains(command)) {
+            zug(command);
+        }
+        if (command.equals("Menü")) {
+            menuCall();
+        }
+        if (command.equals("Exit")) {
+            System.exit(0);
+        }
     }
 }

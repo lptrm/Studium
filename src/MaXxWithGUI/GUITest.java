@@ -4,6 +4,7 @@ import second.Konsole;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +38,7 @@ public class GUITest extends JFrame {
      * Startauflösung mitgegeben
      * @param spielfeld : Schnittstelle zum MaXx Backend - Referenz auf Anzuzeigendes Spiel(-feld)
      */
-    GUITest(Spielfeld spielfeld){
+    GUITest(Spielfeld spielfeld, Controller controller){
         this.spielfeld = spielfeld;
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
@@ -48,11 +49,16 @@ public class GUITest extends JFrame {
         drawFigures();
 
         attachIOpanel();
+        attachListeners(controller);
 
         Konsole.run(this, 1000, 1000);
 
     }
-
+    private void attachListeners(ActionListener actionListener){
+        for (var v : outputPanel.buttons){
+            v.addActionListener(actionListener);
+        }
+    }
     /**
      * TODO: add Description
      */
@@ -112,10 +118,10 @@ public class GUITest extends JFrame {
     public void update(){
         allFieldsRows.forEach(row -> row.forEach( column -> column.occupied = false));
 
-        repaint();
-
 
         drawFigures();
+
+        repaint();
     }
     public OutputPanel getOutputPanel() {
         return outputPanel;
