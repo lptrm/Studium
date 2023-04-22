@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * @version 4.20, 19.04.2023
  **/
 public class GUIManager extends JFrame {
+    public static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
+    public static final Color HIGHLIGHT_COLOR = Color.CYAN;
     //Matrix Array List als Datenstruktur für die Spielfeldpanele
     private final ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen

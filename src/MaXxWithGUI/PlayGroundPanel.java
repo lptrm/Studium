@@ -17,10 +17,10 @@ public class PlayGroundPanel extends JPanel {
         super.paintComponent(g);
 
         //neu rendern
-        g.setColor(Color.darkGray);
+        g.setColor(GUIManager.BACKGROUND_COLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        g.setColor(Color.orange);
+        g.setColor(GUIManager.HIGHLIGHT_COLOR);
         g.setFont(new Font("Arial", Font.BOLD, 32));
         FontMetrics fm = g.getFontMetrics();
         int x, y;
