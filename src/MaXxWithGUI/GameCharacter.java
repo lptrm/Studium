@@ -46,7 +46,16 @@ public class GameCharacter {
         this.column = column;
     }
 
+    public Characters getCharacters() {
+        return characters;
+    }
 }
 enum Characters {
-    BLACK(), WHITE()
+    BLACK(),
+    WHITE();
+    Direction[] directions;
+    Characters() {
+        if (ordinal()==0) directions = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.SOUTH_WEST};
+        if (ordinal()==1) directions = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.NORTH_EAST};
+    }
 }

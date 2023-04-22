@@ -8,9 +8,43 @@ import java.awt.*;
  * @version 4.20, 19.04.2023
  **/
 public class PlayGroundPanel extends JPanel implements IDesignConstants {
-    public String text = "";
-    public boolean occupied = false;
-    public Fraction value;
+    private String text = "";
+    private boolean occupied = false;
+    private boolean possibleMove = false;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
+
+    public boolean isPossibleMove() {
+        return possibleMove;
+    }
+
+    public void setPossibleMove(boolean possibleMove) {
+        this.possibleMove = possibleMove;
+    }
+
+    public Fraction getValue() {
+        return value;
+    }
+
+    public void setValue(Fraction value) {
+        this.value = value;
+    }
+
+    private Fraction value;
 
     @Override
     public void paintComponent(Graphics g) {
@@ -18,6 +52,7 @@ public class PlayGroundPanel extends JPanel implements IDesignConstants {
 
         //neu rendern
         g.setColor(BACKGROUND_COLOR);
+        if(possibleMove) g.setColor(Color.green);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         g.setColor(GUIManager.HIGHLIGHT_COLOR);

@@ -47,6 +47,8 @@ public class GUIManager extends JFrame implements IDesignConstants {
         attachField();
         drawFigures();
 
+        //drawPossiblities();
+
         attachIOpanel();
         attachListeners(controller);
 
@@ -115,13 +117,27 @@ public class GUIManager extends JFrame implements IDesignConstants {
      */
     private void drawFigures(){
         for(var spielfigur : playGround.getFigures()){
-            int row = spielfigur.getColumn();
-            int column = spielfigur.getRow();
-            PlayGroundPanel player = allFieldsRows.get(column).get(row);
-            player.value = Fraction.NaN;
-            player.text = spielfigur.toString();
-            player.occupied = true;
+            int column = spielfigur.getColumn();
+            int row = spielfigur.getRow();
+            PlayGroundPanel player = allFieldsRows.get(row).get(column);
+            player.setValue(Fraction.NaN);
+            player.setText(spielfigur.toString());
+            player.setOccupied(true);
             player.repaint();
+        }
+    }
+    private void drawPossiblities(){
+        for(var figure : playGround.getFigures()){
+            int column = figure.getColumn();
+            int row = figure.getRow();
+            for ( var direction : figure.getCharacters().directions){
+                column += direction.getColumn();
+                row += direction.getRow();
+                PlayGroundPanel neighbor = allFieldsRows.get(row).get(column);
+                neighbor.setPossibleMove(true);
+                column = figure.getColumn();
+                row = figure.getRow();
+            }
         }
     }
     /**
@@ -135,7 +151,7 @@ public class GUIManager extends JFrame implements IDesignConstants {
      * TODO: add Description
      */
     public void update(int playerIndex){
-        allFieldsRows.forEach(row -> row.forEach( column -> column.occupied = false));
+        allFieldsRows.forEach(row -> row.forEach( column -> column.setOccupied(false)));
 
 
         drawFigures();
