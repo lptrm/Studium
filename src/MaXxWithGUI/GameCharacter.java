@@ -19,7 +19,7 @@ public class GameCharacter {
     }
     @Override
     public String toString() {
-        return characters.getSign();
+        return characters.toString().substring(0,1);
     }
 
     public Fraction getPoints() {
@@ -46,7 +46,7 @@ public class GameCharacter {
         this.column = column;
     }
 
-    public String getSign() {
-        return this.characters.getSign();
-    }
+}
+enum Characters {
+    BLACK(), WHITE()
 }

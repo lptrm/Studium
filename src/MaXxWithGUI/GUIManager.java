@@ -107,7 +107,7 @@ public class GUIManager extends JFrame {
             int column = spielfigur.getRow();
             PlayGroundPanel player = allFieldsRows.get(column).get(row);
             player.value = Fraction.NaN;
-            player.text = spielfigur.getSign();
+            player.text = spielfigur.toString();
             player.occupied = true;
             player.repaint();
         }

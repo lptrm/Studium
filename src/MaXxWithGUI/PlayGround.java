@@ -22,10 +22,10 @@ public class PlayGround {
                 } while (
                         this.fields[i][j] == null
                         || this.fields[i][j].getNumerator().compareTo(this.fields[i][j].getDenominator()) <= 0
-                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(10L)) < 0
-                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(10L)) < 0
-                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(999L)) > 0
-                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(999L)) > 0);
+                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(10)) < 0
+                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(10)) < 0
+                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(999)) > 0
+                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(999)) > 0);
             }
         }
         for (GameCharacter figur : figures) {
