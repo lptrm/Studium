@@ -7,7 +7,7 @@ import java.awt.*;
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
-public class PlayGroundPanel extends JPanel {
+public class PlayGroundPanel extends JPanel implements IDesignConstants {
     public String text = "";
     public boolean occupied = false;
     public Fraction value;
@@ -17,11 +17,11 @@ public class PlayGroundPanel extends JPanel {
         super.paintComponent(g);
 
         //neu rendern
-        g.setColor(GUIManager.BACKGROUND_COLOR);
+        g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         g.setColor(GUIManager.HIGHLIGHT_COLOR);
-        g.setFont(new Font("Arial", Font.BOLD, 32));
+        g.setFont(PLAYGROUND_FONT);
         FontMetrics fm = g.getFontMetrics();
         int x, y;
         String text;
@@ -33,8 +33,9 @@ public class PlayGroundPanel extends JPanel {
             g.drawString(text, x, y);
 
         } else if (value.equals(Fraction.NaN)) {
-
-            g.clearRect(0, 0, getWidth(), getHeight());
+            g.setColor(BACKGROUND_COLOR);
+            g.drawRect(0,0,getWidth(),getHeight());
+            g.setColor(HIGHLIGHT_COLOR);
 
         } else {
             text = this.value.numerator.toString();

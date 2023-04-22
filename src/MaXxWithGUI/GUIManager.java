@@ -1,7 +1,5 @@
 package MaXxWithGUI;
 
-import second.Konsole;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -11,13 +9,12 @@ import java.util.ArrayList;
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
-public class GUIManager extends JFrame {
-    public static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
-    public static final Color HIGHLIGHT_COLOR = Color.CYAN;
+public class GUIManager extends JFrame implements IDesignConstants {
+
     //Matrix Array List als Datenstruktur für die Spielfeldpanele
     private final ArrayList<ArrayList<PlayGroundPanel>> allFieldsRows = new ArrayList<>();
     //Eigene Dateien erstellen
-    private final OutputPanel outputPanel = new OutputPanel();
+    private final InputPanel inputPanel = new InputPanel();
     private final StatusPanel statusPanel = new StatusPanel();
 
 
@@ -61,6 +58,7 @@ public class GUIManager extends JFrame {
 
     }
     private void display(){
+        setBackground(BACKGROUND_COLOR);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MaXx 4.20");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -69,7 +67,7 @@ public class GUIManager extends JFrame {
         //setUndecorated(true);         Vollbild, ggf. am Ende nutzen
     };
     private void attachListeners(ActionListener actionListener){
-        for (var v : outputPanel.getButtons()){
+        for (var v : inputPanel.getButtons()){
             v.addActionListener(actionListener);
         }
     }
@@ -77,10 +75,10 @@ public class GUIManager extends JFrame {
      * TODO: add Description
      */
     private void attachIOpanel(){
-        for(var jButton : outputPanel.getButtons()){
-            outputPanel.add(jButton);
+        for(var jButton : inputPanel.getButtons()){
+            inputPanel.add(jButton);
         }
-        container.add(outputPanel);
+        container.add(inputPanel);
     }
     /**
      * TODO: add Description
@@ -146,7 +144,7 @@ public class GUIManager extends JFrame {
 
         repaint();
     }
-    public OutputPanel getOutputPanel() {
-        return outputPanel;
+    public InputPanel getOutputPanel() {
+        return inputPanel;
     }
 }
