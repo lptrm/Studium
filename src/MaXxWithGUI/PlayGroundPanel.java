@@ -14,23 +14,43 @@ public class PlayGroundPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        this.setBackground(Color.white);
-        //neu rendern
-        g.clearRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g);
 
-        g.setFont(new Font("SansSerif", Font.BOLD, 28));
+        //neu rendern
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        g.setColor(Color.orange);
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        FontMetrics fm = g.getFontMetrics();
+        int x, y;
+        String text;
         if (occupied) {
-            g.drawString(text, getWidth()/2, getHeight()/2);
+
+            text = this.text;
+            x = (getWidth() - fm.stringWidth(text)) / 2;
+            y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+            g.drawString(text, x, y);
+
         } else if (value.equals(Fraction.NaN)) {
+
             g.clearRect(0, 0, getWidth(), getHeight());
+
         } else {
-            //g.drawString(value.numerator.toString(), getWidth()/2, getHeight()/3);
-            g.drawChars(value.numerator.toString().toCharArray(), 0, value.numerator.toString().toCharArray().length, getWidth()/3, getHeight()/3);
-            g.drawLine((getWidth() / 4), getHeight()/2, (getWidth() / 4)*3, getHeight()/2);
-            g.drawChars(value.denominator.toString().toCharArray(), 0, value.denominator.toString().toCharArray().length, getWidth()/3, 2*getHeight()/3);
-            g.setColor(Color.black);
+            text = this.value.numerator.toString();
+            x = (getWidth() - fm.stringWidth(text)) / 2;
+            y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent() - getHeight() / 4;
+            g.drawString(text, x, y);
+            text = "\u2500\u2500\u2500";
+            x = (getWidth() - fm.stringWidth(text)) / 2;
+            y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+            g.drawString(text, x, y);
+            text = this.value.denominator.toString();
+            x = (getWidth() - fm.stringWidth(text)) / 2;
+            y = (getHeight() - fm.getHeight() / 2) + fm.getAscent() - getHeight() / 4;
+            g.drawString(text, x, y);
         }
-        g.drawRect(0,0,getWidth(),getHeight());
+        g.drawRect(0, 0, getWidth(), getHeight());
 
 
     }
