@@ -9,90 +9,67 @@ import java.util.Random;
  * @version 4.20, 19.04.2023
  **/
 public class Spielfeld {
-    private final int zeilen = 8;
-    private final int spalten = 8;
-    private final Fraction[][] feld;
-    private final Spielfigur[] f;
+    private final Fraction[][] fields = new Fraction[8][8];
+    private final Spielfigur[] figures;
 
     public Spielfeld(Spielfigur[] arr) {
-        this.feld = new Fraction[this.zeilen][this.spalten];
-        this.f = arr;
-
-        for (int i = 0; i < this.zeilen; i++) {
-            for (int j = 0; j < this.spalten; j++) {
-                Random r1 = new Random();
-                Random r2 = new Random();
-
+        this.figures = arr;
+        Random r1 = new Random();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 do {
-                    this.feld[i][j] = new Fraction(new BigInteger(10, r1), new BigInteger(10, r2));
-                } while (this.feld[i][j] == null || this.feld[i][j].getNumerator().compareTo(this.feld[i][j].getDenominator()) <= 0 || this.feld[i][j].getDenominator().compareTo(BigInteger.valueOf(10L)) < 0 || this.feld[i][j].getNumerator().compareTo(BigInteger.valueOf(10L)) < 0 || this.feld[i][j].getDenominator().compareTo(BigInteger.valueOf(999L)) > 0 || this.feld[i][j].getNumerator().compareTo(BigInteger.valueOf(999L)) > 0);
-
+                    this.fields[i][j] = new Fraction(new BigInteger(10, r1), new BigInteger(10, r1));
+                } while (
+                        this.fields[i][j] == null
+                        || this.fields[i][j].getNumerator().compareTo(this.fields[i][j].getDenominator()) <= 0
+                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(10L)) < 0
+                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(10L)) < 0
+                        || this.fields[i][j].getDenominator().compareTo(BigInteger.valueOf(999L)) > 0
+                        || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(999L)) > 0);
             }
         }
-        for (Spielfigur ff : f) {
-            setValue(ff.getZeile(), ff.getSpalte());
+        for (Spielfigur figur : figures) {
+            setValue(figur.getRow(), figur.getColumn());
         }
 
     }
 
-    public Fraction[][] getFeld() {
-        return feld;
+    public Fraction[][] getFields() {
+        return fields;
     }
 
     public String toString() {
-        int b = 0;
-        for (Fraction[] ff : this.feld) {
-            for (Fraction f : ff) {
-                if (b < f.toString().length() - 1) {
-                    b = f.toString().length() - 1;
+        StringBuilder sb = new StringBuilder();
+        int iRow = 0, iColumn = 0;
+        for (var row: fields) {
+            sb.append("[ ");
+            for (var column: row) {
+                StringBuilder content = new StringBuilder();
+                if(!column.equals(Fraction.NaN)){
+                    content.append(column);
                 }
+                for(var figure : figures){
+                    if(figure.getRow()==iRow && figure.getColumn()==iColumn) content.append(figure).append("  ");
+                }
+                sb.append(String.format("%1$8s", content));
+                iColumn = ++iColumn % 8;
             }
+            sb.append(" ]\n");
+            iRow ++;
         }
-
-        String res = "";
-        for (int i = 0; i < zeilen; i++) {
-            res = res.concat("[ ");
-            for (int j = 0; j < spalten; j++) {
-                for (int a = this.feld[i][j].toString().length() - 1; a < b; ++a) {
-                    res = res.concat(" ");
-                }
-                if (this.feld[i][j].getNumerator().equals(BigInteger.ZERO) && this.feld[i][j].getDenominator().equals(BigInteger.ZERO)) {
-                    int k = 0;
-                    for (Spielfigur ff : f) {
-                        if (ff.getZeile() == i && ff.getSpalte() == j) {
-                            res = res.concat(ff.getSign());
-                            k++;
-                        }
-                    }
-                    while (k <= this.feld[i][j].toString().length()) {
-                        res = res.concat(" ");
-                        k++;
-                    }
-                } else {
-                    res = res.concat("" + this.feld[i][j] + " ");
-                }
-            }
-
-            res = res.concat(" ]\n");
-        }
-
-        return res;
+        return sb.toString();
     }
 
     public void setValue(int x, int y) {
-        this.feld[x][y] = new Fraction(0, 0);
+        this.fields[x][y] = new Fraction(0, 0);
     }
 
-    public Fraction getValue(int x, int y) {
-        return this.feld[x][y];
+    public Fraction getFields(int x, int y) {
+        return this.fields[x][y];
     }
 
-    public Spielfigur[] getF() {
-        return f;
-    }
-
-    public Spielfigur getF(int i) {
-        return f[i];
+    public Spielfigur[] getFigures() {
+        return figures;
     }
 
 }

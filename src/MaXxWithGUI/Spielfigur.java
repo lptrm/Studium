@@ -7,49 +7,43 @@ package MaXxWithGUI;
 
 public class Spielfigur {
     private final Figur figur;
-    private int zeile;
-    private int spalte;
-    private Fraction punkte;
+    private int row;
+    private int column;
+    private Fraction points = new Fraction(0,0);
 
 
     public Spielfigur(Figur figur) {
         this.figur = figur;
-        this.punkte = new Fraction(0, 0);
-        if (this.figur.getSign().equals("W")) {
-            this.zeile = 2;
-            this.spalte = 3;
-        } else if (this.figur.getSign().equals("B")) {
-            this.zeile = 5;
-            this.spalte = 4;
-        }
+        row = this.figur == Figur.WHITE ? 2 : 5;
+        column = this.figur == Figur.WHITE ? 3 : 4;
+    }
+    @Override
+    public String toString() {
+        return figur.getSign();
     }
 
-    public Fraction getPunkte() {
-        return punkte;
+    public Fraction getPoints() {
+        return points;
     }
 
-    public void setPunkte(Fraction f) {
-        this.punkte = this.punkte.add(f);
+    public void setPoints(Fraction f) {
+        this.points = this.points.add(f);
     }
 
-    public int getZeile() {
-        return zeile;
+    public int getRow() {
+        return row;
     }
 
-    public void setZeile(int zeile) {
-        this.zeile = zeile;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public int getSpalte() {
-        return spalte;
+    public int getColumn() {
+        return column;
     }
 
-    public void setSpalte(int spalte) {
-        this.spalte = spalte;
-    }
-
-    public Richtung[] getDir() {
-        return this.figur.getDir();
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public String getSign() {

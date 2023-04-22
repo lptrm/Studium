@@ -36,21 +36,6 @@ public class Fraction extends Number implements Comparable<Fraction> {
         this(BigInteger.valueOf(zaehler), BigInteger.valueOf(nenner));
     }
 
-    public Fraction(String zaehler, String nenner) {
-        this(Fraction.stringTest(zaehler), Fraction.stringTest(nenner));
-    }
-
-    public static Long stringTest(String s) {
-        long res;
-        try {
-            res = Long.parseLong(s);
-        } catch (Exception e) {
-            System.out.println(e + " Fehler beim konvertieren von String zu Long\n" +
-                    "Wert auf 0 gesetzt");
-            res = 0;
-        }
-        return res;
-    }
 
     public String toString() {
         String res = "";

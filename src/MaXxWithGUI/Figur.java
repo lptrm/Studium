@@ -5,25 +5,24 @@ package MaXxWithGUI;
  * @version 4.20, 19.04.2023
  **/
 public enum Figur {
-    Schwarz("B"), Weiss("W");
+    BLACK("B"), WHITE("W");
     private final String sign;
-    private Richtung[] dir;
+    private Richtung[] direction;
 
     Figur(String sign) {
         this.sign = sign;
         if (this.sign.equals("B")) {
-            this.dir = new Richtung[]{Richtung.Nord, Richtung.Ost, Richtung.Sued, Richtung.West, Richtung.Suedwest};
+            this.direction = new Richtung[]{Richtung.NORTH, Richtung.EAST, Richtung.SOUTH, Richtung.WEST, Richtung.SOUTH_WEST};
         }
         if (this.sign.equals("W")) {
-            this.dir = new Richtung[]{Richtung.Nord, Richtung.Ost, Richtung.Sued, Richtung.West, Richtung.Nordost};
+            this.direction = new Richtung[]{Richtung.NORTH, Richtung.EAST, Richtung.SOUTH, Richtung.WEST, Richtung.NORTH_EAST};
         }
     }
-
     public String getSign() {
         return this.sign;
     }
 
-    public Richtung[] getDir() {
-        return dir;
+    public Richtung[] getDirection() {
+        return direction;
     }
 }

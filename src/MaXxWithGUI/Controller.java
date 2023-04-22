@@ -19,7 +19,7 @@ public class Controller implements ActionListener {
 
     private final Double[] points = new Double[2];
     //Hier ggf. Reihenfolge beachte? TODO: testen
-    private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.Weiss), new Spielfigur(Figur.Schwarz)};
+    private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.WHITE), new Spielfigur(Figur.BLACK)};
     private final Spielfeld spielfeld = new Spielfeld(spielfigur);
     private final GUIManager guiManager;
 
@@ -39,7 +39,7 @@ public class Controller implements ActionListener {
     public Double[] getPoints() {
         int i = 0;
         for (var v : spielfigur) {
-            points[i++] = v.getPunkte().doubleValue();
+            points[i++] = v.getPoints().doubleValue();
         }
         return points;
     }
@@ -57,12 +57,12 @@ public class Controller implements ActionListener {
     private void zug(String command) {
         if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;
         Richtung richtung = switch (command.toUpperCase()) {
-            case "N" -> Richtung.Nord;
-            case "O" -> Richtung.Ost;
-            case "S" -> Richtung.Sued;
-            case "W" -> Richtung.West;
-            case "NO" -> Richtung.Nordost;
-            case "SW" -> Richtung.Suedwest;
+            case "N" -> Richtung.NORTH;
+            case "O" -> Richtung.EAST;
+            case "S" -> Richtung.SOUTH;
+            case "W" -> Richtung.WEST;
+            case "NO" -> Richtung.NORTH_EAST;
+            case "SW" -> Richtung.SOUTH_WEST;
             default -> throw new IllegalStateException("Unexpected value: " + command);
         };
         eingabe = isLegit(richtung, spielfigur[playerIndex]);
@@ -92,8 +92,8 @@ public class Controller implements ActionListener {
      * falsch, wenn die neue Position außerhalb der Spielfeldgrenzen ist
      */
     private boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
-        int spalteMax = richtung.getSpalte() + spielfigur.getSpalte();
-        int zeileMax = richtung.getZeile() + spielfigur.getZeile();
+        int spalteMax = richtung.getColumn() + spielfigur.getColumn();
+        int zeileMax = richtung.getRow() + spielfigur.getRow();
         return spalteMax >= 0 && spalteMax <= 7 && zeileMax >= 0 && zeileMax <= 7;
     }
 
@@ -102,8 +102,8 @@ public class Controller implements ActionListener {
      * der Gewinner gesetzt.
      */
     private void isEnd() {
-        for (Spielfigur spielfigur : spielfeld.getF()) {
-            if (spielfigur.getPunkte().doubleValue() >= END) {
+        for (Spielfigur spielfigur : spielfeld.getFigures()) {
+            if (spielfigur.getPoints().doubleValue() >= END) {
                 System.out.println(spielfigur);
                 System.exit(0);
             }
@@ -119,10 +119,10 @@ public class Controller implements ActionListener {
      * @param richtung   : Richtung, in die die Spielfigur ziehen möchte
      */
     private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
-        spielfigur.setZeile(spielfigur.getZeile() + richtung.getZeile());
-        spielfigur.setSpalte(spielfigur.getSpalte() + richtung.getSpalte());
-        spielfigur.setPunkte(spielfeld.getValue(spielfigur.getZeile(), spielfigur.getSpalte()));
-        spielfeld.setValue(spielfigur.getZeile(), spielfigur.getSpalte());
+        spielfigur.setRow(spielfigur.getRow() + richtung.getRow());
+        spielfigur.setColumn(spielfigur.getColumn() + richtung.getColumn());
+        spielfigur.setPoints(spielfeld.getFields(spielfigur.getRow(), spielfigur.getColumn()));
+        spielfeld.setValue(spielfigur.getRow(), spielfigur.getColumn());
         isEnd();
 
     }

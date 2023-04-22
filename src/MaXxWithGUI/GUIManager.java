@@ -84,7 +84,7 @@ public class GUIManager extends JFrame {
         JPanel panel = new JPanel();
         container.add(panel);
         panel.setLayout(new GridLayout(8,8));
-        for (Fraction[] fractions : spielfeld.getFeld()){
+        for (Fraction[] fractions : spielfeld.getFields()){
 
             ArrayList<PlayGroundPanel> temporaryList = new ArrayList<>();
 
@@ -102,9 +102,9 @@ public class GUIManager extends JFrame {
      * TODO: add Description
      */
     private void drawFigures(){
-        for(var spielfigur : spielfeld.getF()){
-            int row = spielfigur.getSpalte();
-            int column = spielfigur.getZeile();
+        for(var spielfigur : spielfeld.getFigures()){
+            int row = spielfigur.getColumn();
+            int column = spielfigur.getRow();
             PlayGroundPanel player = allFieldsRows.get(column).get(row);
             player.value = Fraction.NaN;
             player.text = spielfigur.getSign();

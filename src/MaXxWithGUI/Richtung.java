@@ -5,27 +5,21 @@ package MaXxWithGUI;
  * @version 4.20, 19.04.2023
  **/
 public enum Richtung {
-    Nord("N", -1, 0), Ost("O", 0, 1), Sued("S", 1, 0),
-    West("W", 0, -1), Nordost("NO", -1, 1), Suedwest("SW", 1, -1);
+    NORTH(-1,0), EAST(0,1), SOUTH(1,0),
+    WEST(0,-1), NORTH_EAST(-1,1), SOUTH_WEST(1,-1);
 
-    private final String shrt; //evtl weglassen?
-    private final int zeile, spalte;
+    private final int row, column;
 
-    Richtung(String shrt, int zeile, int spalte) {
-        this.shrt = shrt;
-        this.zeile = zeile;
-        this.spalte = spalte;
+    Richtung(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
-    public String getShrt() {
-        return this.shrt;
+    public int getColumn() {
+        return column;
     }
 
-    public int getSpalte() {
-        return spalte;
-    }
-
-    public int getZeile() {
-        return zeile;
+    public int getRow() {
+        return row;
     }
 }
