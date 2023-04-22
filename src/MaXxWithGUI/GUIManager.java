@@ -24,7 +24,7 @@ public class GUIManager extends JFrame {
 
 
 
-    private final Spielfeld spielfeld;
+    private final PlayGround playGround;
     private final Container container = getContentPane();
 
     /**
@@ -36,10 +36,10 @@ public class GUIManager extends JFrame {
      * das Eingabe panel wird hinzugefügt
      * über die run() Methode des Hilfsprogramms Konsole wird der JFrame gestartet, als Parameter wir die gewünschte
      * Startauflösung mitgegeben
-     * @param spielfeld : Schnittstelle zum MaXx Backend - Referenz auf Anzuzeigendes Spiel(-feld)
+     * @param playGround : Schnittstelle zum MaXx Backend - Referenz auf Anzuzeigendes Spiel(-feld)
      */
-    GUIManager(Spielfeld spielfeld, Controller controller){
-        this.spielfeld = spielfeld;
+    GUIManager(PlayGround playGround, Controller controller){
+        this.playGround = playGround;
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         attachStatus();
@@ -84,7 +84,7 @@ public class GUIManager extends JFrame {
         JPanel panel = new JPanel();
         container.add(panel);
         panel.setLayout(new GridLayout(8,8));
-        for (Fraction[] fractions : spielfeld.getFields()){
+        for (Fraction[] fractions : playGround.getFields()){
 
             ArrayList<PlayGroundPanel> temporaryList = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class GUIManager extends JFrame {
      * TODO: add Description
      */
     private void drawFigures(){
-        for(var spielfigur : spielfeld.getFigures()){
+        for(var spielfigur : playGround.getFigures()){
             int row = spielfigur.getColumn();
             int column = spielfigur.getRow();
             PlayGroundPanel player = allFieldsRows.get(column).get(row);

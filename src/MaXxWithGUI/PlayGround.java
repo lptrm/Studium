@@ -8,11 +8,11 @@ import java.util.Random;
  * @author Timo Kerber, Marcel Illenseer, Jan Obernberger
  * @version 4.20, 19.04.2023
  **/
-public class Spielfeld {
+public class PlayGround {
     private final Fraction[][] fields = new Fraction[8][8];
-    private final Spielfigur[] figures;
+    private final GameCharacter[] figures;
 
-    public Spielfeld(Spielfigur[] arr) {
+    public PlayGround(GameCharacter[] arr) {
         this.figures = arr;
         Random r1 = new Random();
         for (int i = 0; i < 8; i++) {
@@ -28,7 +28,7 @@ public class Spielfeld {
                         || this.fields[i][j].getNumerator().compareTo(BigInteger.valueOf(999L)) > 0);
             }
         }
-        for (Spielfigur figur : figures) {
+        for (GameCharacter figur : figures) {
             setValue(figur.getRow(), figur.getColumn());
         }
 
@@ -68,7 +68,7 @@ public class Spielfeld {
         return this.fields[x][y];
     }
 
-    public Spielfigur[] getFigures() {
+    public GameCharacter[] getFigures() {
         return figures;
     }
 

@@ -5,21 +5,21 @@ package MaXxWithGUI;
  * @version X, 11.01.2023
  **/
 
-public class Spielfigur {
-    private final Figur figur;
+public class GameCharacter {
+    private final Characters characters;
     private int row;
     private int column;
     private Fraction points = new Fraction(0,0);
 
 
-    public Spielfigur(Figur figur) {
-        this.figur = figur;
-        row = this.figur == Figur.WHITE ? 2 : 5;
-        column = this.figur == Figur.WHITE ? 3 : 4;
+    public GameCharacter(Characters characters) {
+        this.characters = characters;
+        row = this.characters == Characters.WHITE ? 2 : 5;
+        column = this.characters == Characters.WHITE ? 3 : 4;
     }
     @Override
     public String toString() {
-        return figur.getSign();
+        return characters.getSign();
     }
 
     public Fraction getPoints() {
@@ -47,6 +47,6 @@ public class Spielfigur {
     }
 
     public String getSign() {
-        return this.figur.getSign();
+        return this.characters.getSign();
     }
 }

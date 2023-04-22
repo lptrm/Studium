@@ -19,8 +19,8 @@ public class Controller implements ActionListener {
 
     private final Double[] points = new Double[2];
     //Hier ggf. Reihenfolge beachte? TODO: testen
-    private final Spielfigur[] spielfigur = new Spielfigur[]{new Spielfigur(Figur.WHITE), new Spielfigur(Figur.BLACK)};
-    private final Spielfeld spielfeld = new Spielfeld(spielfigur);
+    private final GameCharacter[] gameCharacter = new GameCharacter[]{new GameCharacter(Characters.WHITE), new GameCharacter(Characters.BLACK)};
+    private final PlayGround playGround = new PlayGround(gameCharacter);
     private final GUIManager guiManager;
 
     /**
@@ -28,7 +28,7 @@ public class Controller implements ActionListener {
      */
 
     public Controller() {
-        guiManager = new GUIManager(spielfeld, this);
+        guiManager = new GUIManager(playGround, this);
     }
 
     /**
@@ -38,7 +38,7 @@ public class Controller implements ActionListener {
      */
     public Double[] getPoints() {
         int i = 0;
-        for (var v : spielfigur) {
+        for (var v : gameCharacter) {
             points[i++] = v.getPoints().doubleValue();
         }
         return points;
@@ -55,21 +55,21 @@ public class Controller implements ActionListener {
      * @param command : Eingabestring, enthalten im Wort "NOSW"
      */
     private void zug(String command) {
-        if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;
-        Richtung richtung = switch (command.toUpperCase()) {
-            case "N" -> Richtung.NORTH;
-            case "O" -> Richtung.EAST;
-            case "S" -> Richtung.SOUTH;
-            case "W" -> Richtung.WEST;
-            case "NO" -> Richtung.NORTH_EAST;
-            case "SW" -> Richtung.SOUTH_WEST;
+        if (eingabe) playerIndex = playerIndex == 0 ? 1 : 0;    //In Funktion auslagern, die am Ende des Zuges gerufen wird
+        Direction direction = switch (command.toUpperCase()) {
+            case "N" -> Direction.NORTH;
+            case "O" -> Direction.EAST;
+            case "S" -> Direction.SOUTH;
+            case "W" -> Direction.WEST;
+            case "NO" -> Direction.NORTH_EAST;
+            case "SW" -> Direction.SOUTH_WEST;
             default -> throw new IllegalStateException("Unexpected value: " + command);
         };
-        eingabe = isLegit(richtung, spielfigur[playerIndex]);
+        eingabe = isLegit(direction, gameCharacter[playerIndex]);
         if (eingabe) {
-            moveFigure(spielfigur[playerIndex], richtung);
+            moveFigure(gameCharacter[playerIndex], direction);
             //For Debug
-            System.out.println(spielfeld);
+            System.out.println(playGround);
             guiManager.update(playerIndex);
         } else {
             System.out.println("Fehleingabe");
@@ -86,15 +86,15 @@ public class Controller implements ActionListener {
     /**
      * Validiert den gewünschten Zug des Spielers
      *
-     * @param richtung   : wird aus Eingabe ermittelt, gewünschte Zugrichtung des Nutzers
-     * @param spielfigur : Spielfigur, welche den Zug ausführen möchte
+     * @param direction   : wird aus Eingabe ermittelt, gewünschte Zugrichtung des Nutzers
+     * @param gameCharacter : Spielfigur, welche den Zug ausführen möchte
      * @return : wahr, wenn die neue Position innerhalb der Spielfeldgrenzen ist
      * falsch, wenn die neue Position außerhalb der Spielfeldgrenzen ist
      */
-    private boolean isLegit(Richtung richtung, Spielfigur spielfigur) {
-        int spalteMax = richtung.getColumn() + spielfigur.getColumn();
-        int zeileMax = richtung.getRow() + spielfigur.getRow();
-        return spalteMax >= 0 && spalteMax <= 7 && zeileMax >= 0 && zeileMax <= 7;
+    private boolean isLegit(Direction direction, GameCharacter gameCharacter) {
+        int columnBound = direction.getColumn() + gameCharacter.getColumn();
+        int rowBound = direction.getRow() + gameCharacter.getRow();
+        return columnBound >= 0 && columnBound <= 7 && rowBound >= 0 && rowBound <= 7;
     }
 
     /**
@@ -102,9 +102,9 @@ public class Controller implements ActionListener {
      * der Gewinner gesetzt.
      */
     private void isEnd() {
-        for (Spielfigur spielfigur : spielfeld.getFigures()) {
-            if (spielfigur.getPoints().doubleValue() >= END) {
-                System.out.println(spielfigur);
+        for (GameCharacter gameCharacter : playGround.getFigures()) {
+            if (gameCharacter.getPoints().doubleValue() >= END) {
+                System.out.println(gameCharacter);
                 System.exit(0);
             }
         }
@@ -115,14 +115,14 @@ public class Controller implements ActionListener {
      * des Feldes auf den Punktestand der Spielfigur
      * Die Validierung des Zuges findet in der zug() Methode statt
      *
-     * @param spielfigur : Spielfigur, die ziehen möchte
-     * @param richtung   : Richtung, in die die Spielfigur ziehen möchte
+     * @param gameCharacter : Spielfigur, die ziehen möchte
+     * @param direction   : Richtung, in die die Spielfigur ziehen möchte
      */
-    private void moveFigure(Spielfigur spielfigur, Richtung richtung) {
-        spielfigur.setRow(spielfigur.getRow() + richtung.getRow());
-        spielfigur.setColumn(spielfigur.getColumn() + richtung.getColumn());
-        spielfigur.setPoints(spielfeld.getFields(spielfigur.getRow(), spielfigur.getColumn()));
-        spielfeld.setValue(spielfigur.getRow(), spielfigur.getColumn());
+    private void moveFigure(GameCharacter gameCharacter, Direction direction) {
+        gameCharacter.setRow(gameCharacter.getRow() + direction.getRow());
+        gameCharacter.setColumn(gameCharacter.getColumn() + direction.getColumn());
+        gameCharacter.setPoints(playGround.getFields(gameCharacter.getRow(), gameCharacter.getColumn()));
+        playGround.setValue(gameCharacter.getRow(), gameCharacter.getColumn());
         isEnd();
 
     }
