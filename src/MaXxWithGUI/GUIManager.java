@@ -51,9 +51,21 @@ public class GUIManager extends JFrame {
         attachIOpanel();
         attachListeners(controller);
 
-        Konsole.run(this, 1000, 1000);
+        display();
+
+
+
+        //setSize(Toolkit.getDefaultToolkit().getScreenSize());
 
     }
+    private void display(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("MaXx 4.20");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+        setVisible(true);
+        //setUndecorated(true);         Vollbild, ggf. am Ende nutzen
+    };
     private void attachListeners(ActionListener actionListener){
         for (var v : outputPanel.getButtons()){
             v.addActionListener(actionListener);

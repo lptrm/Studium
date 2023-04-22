@@ -15,19 +15,22 @@ public class PlayGroundPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         this.setBackground(Color.white);
-        super.paintComponent(g);
-        //g.setFont(new Font(..));
+        //neu rendern
+        g.clearRect(0, 0, getWidth(), getHeight());
+
+        g.setFont(new Font("SansSerif", Font.BOLD, 28));
         if (occupied) {
-            g.drawString(text, 50, 40);
+            g.drawString(text, getWidth()/2, getHeight()/2);
         } else if (value.equals(Fraction.NaN)) {
             g.clearRect(0, 0, getWidth(), getHeight());
         } else {
-
-            g.drawString(value.numerator.toString(), 50, 30);
-            g.drawString("\u2500\u2500\u2500", 50, 40);
-            g.drawString(value.denominator.toString(), 50, 50);
+            //g.drawString(value.numerator.toString(), getWidth()/2, getHeight()/3);
+            g.drawChars(value.numerator.toString().toCharArray(), 0, value.numerator.toString().toCharArray().length, getWidth()/3, getHeight()/3);
+            g.drawLine((getWidth() / 4), getHeight()/2, (getWidth() / 4)*3, getHeight()/2);
+            g.drawChars(value.denominator.toString().toCharArray(), 0, value.denominator.toString().toCharArray().length, getWidth()/3, 2*getHeight()/3);
             g.setColor(Color.black);
         }
+        g.drawRect(0,0,getWidth(),getHeight());
 
 
     }
