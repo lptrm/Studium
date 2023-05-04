@@ -1,4 +1,4 @@
-package MaXxWithGUI;
+package MaXxServerClient.MaXxWithGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,6 @@ public class GUIManager extends JFrame implements IDesignConstants {
         attachListeners(controller);
 
         display();
-
 
 
         //setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -120,7 +119,7 @@ public class GUIManager extends JFrame implements IDesignConstants {
             int column = spielfigur.getColumn();
             int row = spielfigur.getRow();
             PlayGroundPanel player = allFieldsRows.get(row).get(column);
-            player.setValue(Fraction.NaN);
+            player.setFraction(Fraction.NaN);
             player.setText(spielfigur.toString());
             player.setOccupied(true);
             player.repaint();
@@ -130,11 +129,11 @@ public class GUIManager extends JFrame implements IDesignConstants {
         for(var figure : playGround.getFigures()){
             int column = figure.getColumn();
             int row = figure.getRow();
-            for ( var direction : figure.getCharacters().directions){
+            for (var direction : figure.getCharacters().directions){
                 column += direction.getColumn();
                 row += direction.getRow();
                 PlayGroundPanel neighbor = allFieldsRows.get(row).get(column);
-                neighbor.setPossibleMove(true);
+                neighbor.setNeighbor(true);
                 column = figure.getColumn();
                 row = figure.getRow();
             }

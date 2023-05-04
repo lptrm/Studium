@@ -1,4 +1,4 @@
-package MaXxWithGUI;
+package MaXxServerClient.MaXxWithGUI;
 
 /**
  * @author Jan Obernberger
