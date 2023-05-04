@@ -154,13 +154,5 @@ public class Umfuelllisten {
             return a != o.a ? Integer.compare(a, o.a) : b != o.b ? Integer.compare(b, o.b) : c != o.c ? Integer.compare(c, o.c) :
                     d != o.d ? Integer.compare(d, o.d) : e != o.e ? Integer.compare(e, o.e) : 0;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof State state)) return false;
-            return a == state.a && b == state.b && c == state.c && d == state.d && e == state.e;
-        }
-
     }
 }
