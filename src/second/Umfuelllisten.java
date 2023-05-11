@@ -2,6 +2,7 @@ package second;
 
 import java.util.*;
 /**
+ * 1000, 11, 37, 13, 1000
  * @author Jan Obernberger: 215470
  * @version 4.20, 04.05.2023
  **/
@@ -41,7 +42,7 @@ public class Umfuelllisten {
                         State possibleState =   // neues State Objekt erzeugen
                                 new State(successor[0], successor[1], successor[2], successor[3], successor[4]);
                         if (!seen.contains(possibleState)) {
-                            stack.push(possibleState); //State Objekt in die BFS-Queue legen
+                            stack.push(possibleState); //State Objekt auf den Stack legen
                         }
                     }
                 }
