@@ -26,13 +26,21 @@ public class Inspector {
                     String className = testClass.getSimpleName();   //Klassenname ermitteln
                     String modifiers = Modifier.toString(testClass.getModifiers()); //Klassen-Modifier ermitteln
                     Method[] methods = testClass.getMethods();  //Klassenmethoden ermitteln
+                    Class<?>[] interfaces = testClass.getInterfaces();  //Interfaces ermitteln
+                    //Interfaces String synthestisieren
+                    StringBuilder interfaceString = new StringBuilder();
+                    for(int i = 0; i < interfaces.length; i++){
+                        interfaceString.append(interfaces[i].getSimpleName());
+                        if(i != interfaces.length - 1) interfaceString.append(", ");
+                    }
 
                     stringBuilder.append(String.format("""
                             --------------------------------------------------
                             --------------------------------------------------
                             Class       : %s
                             Modifier    : %s
-                            """, className, modifiers));
+                            Interfaces  : %s
+                            """, className, modifiers, interfaceString));
                     //Methodenuntersuchungen
                     for (var method : methods) {
                         modifiers = Modifier.toString(method.getModifiers());   //Methoden-Modifier ermitteln
