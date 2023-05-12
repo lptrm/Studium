@@ -18,7 +18,7 @@ public class Inspector {
         System.out.print(prompt);
         String target = scanner.hasNextLine() ? scanner.nextLine().trim() : null;   //Nutzereingabe einlesen
         //Schleife zum Reagieren auf die Nutzereingabe
-        while (target != null && !target.equals("ende")) {
+        while (target != null && !target.equals("exit")) {
             try {
                 do {    //Schleife zum Untersuchen der Klasse
                     Class<?> testClass = Class.forName(target); //Klassenobjekt zum Untersuchen
